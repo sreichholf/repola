@@ -17,35 +17,29 @@
 
 <resources>
 
-	<style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
-		<item name="android:windowAnimationStyle">@android:style/Animation</item>
+	<style name="AppTheme" parent="Theme.MaterialComponents.NoActionBar">
+		<item name="android:windowActivityTransitions">true</item>
+		<item name="android:windowAllowEnterTransitionOverlap">true</item>
+		<item name="android:windowAllowReturnTransitionOverlap">true</item>
+		<item name="android:windowEnterTransition">@transition/activity_open</item>
+		<item name="android:windowExitTransition">@transition/activity_close</item>
 		<item name="android:background">@android:color/transparent</item>
-		<item name="background">@android:color/transparent</item>
-
 		<item name="android:windowBackground">@android:color/transparent</item>
 		<item name="android:colorBackgroundCacheHint">@null</item>
-		<item name="android:windowShowWallpaper">true</item>
-
-		<!--
+		<item name="android:statusBarColor">@android:color/transparent</item>
 		<item name="android:windowTranslucentNavigation">true</item>
 		<item name="android:windowTranslucentStatus">true</item>
-		-->
-	</style>
-
-	<style name="Theme.AppCompat.Light.NoActionBar.FullScreen" parent="@style/AppTheme">
-		<item name="windowNoTitle">true</item>
-		<item name="windowActionBar">false</item>
-		<item name="android:windowFullscreen">true</item>
-		<item name="android:windowContentOverlay">@null</item>
-
-		<item name="android:background">@android:color/transparent</item>
+		<item name="android:windowShowWallpaper">true</item>
 		<item name="background">@android:color/transparent</item>
+		<item name="colorPrimary">@color/colorPrimaryLight</item>
+		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+		<item name="colorSecondary">@color/material_blue_600</item>
+		<item name="colorSecondaryVariant">@color/material_blue_600_variant</item>
+		<item name="colorOnSecondary">@color/white</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="colorControlHighlight">?attr/colorPrimary</item>
+		<item name="materialButtonStyle">@style/TintedButton</item>
 	</style>
 
-	<style name="ApplicationButton" parent="Theme.AppCompat.Light.NoActionBar.FullScreen">
-		<item name="android:layout_width">0dp</item>
-		<item name="android:layout_height">wrap_content</item>
-		<item name="android:layout_weight">1</item>
-		<item name="android:layout_margin">10dp</item>
-	</style>
+	<style name="TintedButton" parent="Widget.MaterialComponents.Button.TextButton"></style>
 </resources>

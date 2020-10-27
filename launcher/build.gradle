@@ -1,6 +1,7 @@
 /*
- * Simple TV Launcher
+ * Simple TV Launcher / R.E.P.O.L.A Launcher
  * Copyright 2017 Alexandre Del Bigio
+ * Copyright 2020 Stephan Reichholf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,32 +17,10 @@
  */
 
 apply plugin: 'com.android.application'
-apply plugin: 'com.github.kt3k.coveralls'
-apply plugin: 'checkstyle'
-
-checkstyle {
-    toolVersion = '6.19'
-}
-
-check.dependsOn 'checkstyle'
-
-task checkstyle(type: Checkstyle) {
-    configFile file("${project.rootDir}/style/checkstyle.xml")
-    configProperties.checkstyleSuppressionsPath = file("${project.rootDir}/style/suppressions.xml").absolutePath
-
-    source 'src/main/java'
-    include 'org/cosinus/**/*.java'
-    exclude '**/gen/**'
-
-    def configProps = ['proj.module.dir': projectDir.absolutePath]
-    configProperties configProps
-
-    classpath = files()
-}
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
 
     lintOptions {
         abortOnError true
@@ -49,11 +28,11 @@ android {
     }
 
     defaultConfig {
-        applicationId "org.cosinus.launchertv"
-        minSdkVersion 14
-        targetSdkVersion 25
-        versionCode 156
-        versionName "1.5.6"
+        applicationId "net.reichholf.repola"
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0.0"
     }
 
     signingConfigs {
@@ -85,17 +64,14 @@ android {
             testCoverageEnabled true
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:25.4.0'
-}
-
-coveralls {
-    jacocoReportPath = "${buildDir}/reports/coverage/debug/report.xml"
-}
-
-tasks.coveralls {
-    dependsOn 'connectedAndroidTest'
-    onlyIf { System.env.'CI' }
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation "androidx.preference:preference:1.1.1"
+    implementation 'com.google.android.material:material:1.2.1'
 }

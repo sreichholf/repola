@@ -1,47 +1,47 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Simple TV Launcher
-  ~ Copyright 2017 Alexandre Del Bigio
-  ~
-  ~ Licensed under the Apache License, Version 2.0 (the "License");
-  ~ you may not use this file except in compliance with the License.
-  ~ You may obtain a copy of the License at
-  ~
-  ~     http://www.apache.org/licenses/LICENSE-2.0
-  ~
-  ~ Unless required by applicable law or agreed to in writing, software
-  ~ distributed under the License is distributed on an "AS IS" BASIS,
-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  ~ See the License for the specific language governing permissions and
-  ~ limitations under the License.
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+* Simple TV Launcher
+* Copyright 2017 Alexandre Del Bigio
+* Copyright 2020 Stephan Reichholf
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
   -->
 
 <resources>
-	<string name="title_screen_always_on">Screen always on</string>
-	<string name="summary_screen_always_on">Keep screen on</string>
+	<string name="title_screen_always_on">Always on</string>
+	<string name="summary_screen_always_on">Keep screen on all the time</string>
 	<string name="app_grid">Grid size</string>
 	<string name="title_grid_x">Columns</string>
-	<string name="summary_grid_x">Number of columns: %s</string>
+	<string name="summary_grid_x">%s columns</string>
 	<string name="title_grid_y">Rows</string>
-	<string name="summary_grid_y">Number of rows: %s</string>
+	<string name="summary_grid_y">%s rows</string>
 	<string name="system">System</string>
 	<string name="title_background">Background</string>
 	<string name="summary_background">Set background image</string>
 	<string name="title_system">System settings</string>
 	<string name="summary_system">Open system settings</string>
-	<string name="summary_show_date">Display the date bellow time</string>
-	<string name="title_show_date">Display date</string>
 	<string name="summary_show_name">Display applications names on main screen</string>
 	<string name="title_show_name">Display names</string>
-	<string name="title_margin_x">Icons margins X</string>
-	<string name="title_margin_y">Icons margins Y</string>
-	<string name="summary_margin_x">Width of space between icons: %s dp</string>
-	<string name="summary_margin_y">Height of space between icons: %s dp</string>
+	<string name="title_margin_x">Horizontal margin</string>
+	<string name="title_margin_y">Vertical margin</string>
+	<string name="summary_margin_x">%s dp</string>
+	<string name="summary_margin_y">%s dp</string>
 	<string name="title_transparency">Background transparency</string>
-	<string name="title_default_transparency">Default transparency</string>
-	<string name="summary_default_transparency">Use legacy tiles transparency</string>
 	<string name="about">About</string>
 	<string name="error_opening_link">Error (%1$s) : %2$s</string>
-	<string name="home_locked">Icon is locked by settings</string>
-	<string name="summary_locked">Prevent icons to be accidentally removed</string>
+	<string name="home_locked">Icons are locked (unlock in settings)</string>
+	<string name="summary_locked">Lock icons, disables change and/or removal</string>
 	<string name="title_locked">Lock icons</string>
+	<string name="cancel">Cancel</string>
+	<string name="remove">Remove</string>
 </resources>

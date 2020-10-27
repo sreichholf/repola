@@ -15,101 +15,90 @@
   ~ limitations under the License.
   -->
 
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="@string/app_name">
-		<CheckBoxPreference
-			android:defaultValue="false"
-			android:key="preference_screen_always_on"
-			android:summary="@string/summary_screen_always_on"
-			android:title="@string/title_screen_always_on"/>
-		<CheckBoxPreference
-			android:defaultValue="false"
-			android:key="preference_show_date"
-			android:summary="@string/summary_show_date"
-			android:title="@string/title_show_date"/>
-		<CheckBoxPreference
-			android:defaultValue="true"
-			android:key="preference_show_name"
-			android:summary="@string/summary_show_name"
-			android:title="@string/title_show_name"/>
-		<CheckBoxPreference
-			android:defaultValue="false"
-			android:key="preference_locked"
-			android:summary="@string/summary_locked"
-			android:title="@string/title_locked"/>
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+	<PreferenceCategory app:title="@string/app_name">
+		<SwitchPreferenceCompat
+			app:defaultValue="false"
+			app:key="preference_screen_always_on"
+			app:summary="@string/summary_screen_always_on"
+			app:title="@string/title_screen_always_on" />
+		<SwitchPreferenceCompat
+			app:defaultValue="true"
+			app:key="preference_show_name"
+			app:summary="@string/summary_show_name"
+			app:title="@string/title_show_name" />
+		<SwitchPreferenceCompat
+			app:defaultValue="false"
+			app:key="preference_locked"
+			app:summary="@string/summary_locked"
+			app:title="@string/title_locked" />
 	</PreferenceCategory>
 	<PreferenceCategory
-		android:key="category_grid"
-		android:title="@string/app_grid">
+		app:key="category_grid"
+		app:title="@string/app_grid">
 		<ListPreference
-			android:defaultValue="3"
-			android:entries="@array/grid_x"
-			android:entryValues="@array/grid_x"
-			android:key="preference_grid_x"
-			android:summary="@string/summary_grid_x"
-			android:title="@string/title_grid_x"/>
+			app:defaultValue="3"
+			app:entries="@array/grid_x"
+			app:entryValues="@array/grid_x"
+			app:key="preference_grid_x"
+			app:summary="@string/summary_grid_x"
+			app:title="@string/title_grid_x" />
 		<ListPreference
-			android:defaultValue="2"
-			android:entries="@array/grid_y"
-			android:entryValues="@array/grid_y"
-			android:key="preference_grid_y"
-			android:summary="@string/summary_grid_y"
-			android:title="@string/title_grid_y"/>
+			app:defaultValue="2"
+			app:entries="@array/grid_y"
+			app:entryValues="@array/grid_y"
+			app:key="preference_grid_y"
+			app:summary="@string/summary_grid_y"
+			app:title="@string/title_grid_y" />
 		<ListPreference
-			android:defaultValue="5"
-			android:entries="@array/margins"
-			android:entryValues="@array/margins"
-			android:key="preference_margin_x"
-			android:summary="@string/summary_margin_x"
-			android:title="@string/title_margin_x"/>
+			app:defaultValue="5"
+			app:entries="@array/margins"
+			app:entryValues="@array/margins"
+			app:key="preference_margin_x"
+			app:summary="@string/summary_margin_x"
+			app:title="@string/title_margin_x" />
 		<ListPreference
-			android:defaultValue="5"
-			android:entries="@array/margins"
-			android:entryValues="@array/margins"
-			android:key="preference_margin_y"
-			android:summary="@string/summary_margin_y"
-			android:title="@string/title_margin_y"/>
+			app:defaultValue="5"
+			app:entries="@array/margins"
+			app:entryValues="@array/margins"
+			app:key="preference_margin_y"
+			app:summary="@string/summary_margin_y"
+			app:title="@string/title_margin_y" />
 	</PreferenceCategory>
 	<PreferenceCategory
-		android:key="category_transparency"
-		android:title="@string/title_transparency">
-		<CheckBoxPreference
-			android:defaultValue="true"
-			android:key="preference_default_transparency"
-			android:summary="@string/summary_default_transparency"
-			android:title="@string/title_default_transparency"/>
-		<org.cosinus.launchertv.views.SliderPreference
-			android:defaultValue="@string/transparency_default"
-			android:dialogMessage="@string/title_transparency"
-			android:key="preference_transparency"
-			android:summary="@array/transparency_values"
-			android:title="@string/title_transparency"/>
+		app:key="category_transparency"
+		app:title="@string/title_transparency">
+		<SeekBarPreference
+			android:max="100"
+			app:defaultValue="20"
+			app:dialogMessage="@string/title_transparency"
+			app:key="preference_transparency_new"
+			app:min="0"
+			app:seekBarIncrement="5"
+			app:showSeekBarValue="true"
+			app:title="@string/title_transparency" />
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/system">
+	<PreferenceCategory app:title="@string/system">
 		<Preference
-			android:key="preference_background"
-			android:summary="@string/summary_background"
-			android:title="@string/title_background">
-			<intent android:action="android.intent.action.SET_WALLPAPER"/>
+			app:key="preference_background"
+			app:summary="@string/summary_background"
+			app:title="@string/title_background">
+			<intent android:action="android.intent.action.SET_WALLPAPER" />
 		</Preference>
 		<Preference
-			android:key="preference_system"
-			android:summary="@string/summary_system"
-			android:title="@string/title_system">
-			<intent android:action="android.settings.SETTINGS"/>
+			app:key="preference_system"
+			app:summary="@string/summary_system"
+			app:title="@string/title_system">
+			<intent android:action="android.settings.SETTINGS" />
 		</Preference>
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/about">
+	<PreferenceCategory app:title="@string/about">
 		<Preference
-			android:key="preference_about"
-			android:title="@string/app_name"/>
+			app:key="preference_about"
+			app:title="@string/app_name" />
 		<Preference
-			android:key="preference_google_plus"
-			android:title="@string/title_google_plus">
-		</Preference>
-		<Preference
-			android:key="preference_github"
-			android:title="@string/title_github">
-		</Preference>
+			app:key="preference_github"
+			app:title="@string/title_github" />
 	</PreferenceCategory>
-</PreferenceScreen>
+</androidx.preference.PreferenceScreen>
