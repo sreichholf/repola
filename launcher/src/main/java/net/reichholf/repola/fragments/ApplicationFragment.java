@@ -23,6 +23,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -41,6 +43,7 @@ import net.reichholf.repola.activities.ApplicationList;
 import net.reichholf.repola.activities.Preferences;
 import net.reichholf.repola.views.ApplicationView;
 
+import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
 
 @SuppressWarnings("PointlessBooleanExpression")
@@ -133,12 +136,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 				ApplicationView av = new ApplicationView(getContext());
 				av.setOnClickListener(this);
 				av.setOnLongClickListener(this);
-				av.setOnMenuOnClickListener(new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						onLongClick(v);
-					}
-				});
+				av.setOnMenuOnClickListener(v -> onLongClick(v));
 				av.setPosition(position++);
 				av.showName(showNames);
 				av.setId(View.generateViewId());
@@ -250,11 +248,16 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 				PackageInfo pi = pm.getPackageInfo(packageName, 0);
 				if (pi != null) {
 					AppInfo appInfo = new AppInfo(pm, pi.applicationInfo);
-					app.setImageDrawable(appInfo.getIconHighRes())
+					app.setImageDrawable(appInfo.getIcon())
 							.setText(appInfo.getName())
 							.setPackageName(appInfo.getPackageName());
+					if (mSetup.colorfulIcons()) {
+						int alpha = (int) (255 - (mSetup.getTransparency() * 255)) << 24;
+						Utils.tintAppIcon(app.getBackground(), appInfo.getPalette(), alpha);
+					}
 				}
 			} else {
+				app.getBackground().setColorFilter(null);
 				if (mSetup.iconsLocked())
 					app.setImageDrawable(null);
 				else

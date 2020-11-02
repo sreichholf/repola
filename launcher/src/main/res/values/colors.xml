@@ -9,4 +9,5 @@
 	<color name="white">#FFFFFF</color>
 	<color name="material_blue_600">#039be5</color>
 	<color name="material_blue_600_variant">#006db3</color>
+	<color name="ic_launcher_background">#FFFFFF</color>
 </resources>

@@ -22,6 +22,8 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Resources;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.util.TypedValue;
 
@@ -32,51 +34,18 @@ import java.util.List;
 import java.util.Set;
 import java.util.HashSet;
 
+import androidx.annotation.ColorInt;
+import androidx.palette.graphics.Palette;
+
 public class Utils {
 	public interface ApplicationListReadyHandler {
 		void onApplicationListReady(ArrayList<AppInfo> applications);
 	}
 
-	private static class AsyncGetApps extends AsyncTask {
-		ApplicationListReadyHandler mReadyHandler;
-		Context mContext;
-		ArrayList<AppInfo> mApplications;
-
-		public AsyncGetApps(Context context, ApplicationListReadyHandler readyHandler) {
-			mReadyHandler = readyHandler;
-			mContext = context;
-			mApplications = new ArrayList<AppInfo>();
-		}
-
-		@Override
-		protected Object doInBackground(Object[] objects) {
-			mApplications.clear();
-			PackageManager packageManager = mContext.getPackageManager();
-
-			Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-			mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-			List<ResolveInfo> intentActivities = packageManager.queryIntentActivities(mainIntent, 0);
-			for (ResolveInfo resolveInfo : intentActivities) {
-				mApplications.add(new AppInfo(packageManager, resolveInfo));
-			}
-
-			Collections.sort(mApplications, new Comparator<AppInfo>() {
-				@Override
-				public int compare(AppInfo lhs, AppInfo rhs) {
-					return lhs.getName().compareToIgnoreCase(rhs.getName());
-				}
-			});
-			return null;
-		}
-
-		@Override
-		protected void onPostExecute(Object o) {
-			mReadyHandler.onApplicationListReady(mApplications);
-		}
-	}
-
-	public static AsyncTask loadApplications(Context context, ApplicationListReadyHandler handler) {
-		return new AsyncGetApps(context, handler).execute();
+	public static void tintAppIcon(Drawable icon, Palette palette, int alpha) {
+		int tintColor = palette.getVibrantColor(palette.getDominantColor(0x00000000));
+		tintColor |= alpha << 24;
+		icon.setColorFilter(tintColor, PorterDuff.Mode.SRC_IN);
 	}
 
 	public static int pixelFromDp(Context context, int dp) {

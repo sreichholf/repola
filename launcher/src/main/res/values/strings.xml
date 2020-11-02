@@ -44,4 +44,6 @@
 	<string name="title_locked">Lock icons</string>
 	<string name="cancel">Cancel</string>
 	<string name="remove">Remove</string>
+	<string name="summary_colorful_icons">Use custom colored backgrounds in application lists</string>
+	<string name="colorful_icons">Colorful Icons</string>
 </resources>

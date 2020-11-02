@@ -1,6 +1,7 @@
 /*
  * Simple TV Launcher
  * Copyright 2017 Alexandre Del Bigio
+ * Copyright 2020 Stephan Reichholf
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,23 +23,27 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.util.DisplayMetrics;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
+import androidx.palette.graphics.Palette;
 
 
 public class AppInfo {
-	private final Drawable mIcon;
-	private Drawable mIconHighRes;
+	private Drawable mIcon;
+	private Palette mPalette;
 	private String mName;
 	private final String mPackageName;
 
+
 	public AppInfo(PackageManager packageManager, ResolveInfo resolveInfo) {
 		mPackageName = resolveInfo.activityInfo.packageName;
-		mIcon = resolveInfo.loadIcon(packageManager);
-		mIconHighRes = mIcon;
+		loadIcon(packageManager, resolveInfo.icon, resolveInfo.loadIcon(packageManager));
+
 		try {
 			mName = resolveInfo.loadLabel(packageManager).toString();
 		} catch (Exception e) {
@@ -48,25 +53,8 @@ public class AppInfo {
 
 	public AppInfo(PackageManager packageManager, ApplicationInfo applicationInfo) {
 		mPackageName = applicationInfo.packageName;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-			Resources res = null;
-			try {
-				res = packageManager.getResourcesForApplication(applicationInfo);
-				// Get a copy of the configuration, and set it to the desired resolution
-				Configuration config = res.getConfiguration();
-				Configuration originalConfig = new Configuration(config);
-				config.densityDpi = DisplayMetrics.DENSITY_XHIGH;
-				DisplayMetrics dm = res.getDisplayMetrics();
-				res.updateConfiguration(config, dm);
-				mIconHighRes = res.getDrawable(applicationInfo.icon);
-			} catch (PackageManager.NameNotFoundException e) {
-				e.printStackTrace();
-			}
-		}
-		if (mIconHighRes.equals(null)) {
-			mIconHighRes = applicationInfo.loadIcon(packageManager);
-		}
-		mIcon = mIconHighRes;
+		loadIcon(packageManager, applicationInfo.icon, applicationInfo.loadIcon(packageManager));
+
 		try {
 			mName = applicationInfo.loadLabel(packageManager).toString();
 		} catch (Exception e) {
@@ -74,6 +62,29 @@ public class AppInfo {
 		}
 	}
 
+	private void loadIcon(PackageManager packageManager, int icon, @NonNull Drawable defaultIcon) {
+		try {
+			Resources res = packageManager.getResourcesForApplication(mPackageName);
+			Configuration config = res.getConfiguration();
+			config.densityDpi = DisplayMetrics.DENSITY_XXHIGH;
+			DisplayMetrics dm = res.getDisplayMetrics();
+			res.updateConfiguration(config, dm);
+			mIcon = ResourcesCompat.getDrawable(res, icon, null);
+		} catch (Exception e) {
+			mIcon = defaultIcon;
+		}
+		mPalette = Palette.from(getBitmapFromDrawable(mIcon)).generate();
+
+	}
+
+	@NonNull
+	private Bitmap getBitmapFromDrawable(@NonNull Drawable drawable) {
+		final Bitmap bmp = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+		final Canvas canvas = new Canvas(bmp);
+		drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+		drawable.draw(canvas);
+		return bmp;
+	}
 
 	@NonNull
 	public String getName() {
@@ -86,11 +97,11 @@ public class AppInfo {
 		return mIcon;
 	}
 
-	public Drawable getIconHighRes() {
-		return mIconHighRes;
-	}
-
 	public String getPackageName() {
 		return mPackageName;
+	}
+
+	public Palette getPalette() {
+		return mPalette;
 	}
 }

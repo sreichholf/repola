@@ -26,8 +26,9 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 	public static final String PREFERENCE_MARGIN_X = "preference_margin_x";
 	public static final String PREFERENCE_MARGIN_Y = "preference_margin_y";
 	public static final String PREFERENCE_LOCKED = "preference_locked";
-	private static final String PREFERENCE_GITHUB = "preference_github";
-	private static final String PREFERENCE_ABOUT = "preference_about";
+	public static final String PREFERENCE_GITHUB = "preference_github";
+	public static final String PREFERENCE_ABOUT = "preference_about";
+	public static final String PREFERENCE_COLORFUL_ICONS = "preference_colorful_icons";
 
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -85,12 +86,9 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 	private void bindSummary(String key, final int resId) {
 		final ListPreference p = findPreference(key);
 		setPreferenceSummaryValue(p, resId, p.getValue());
-		p.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
-			@Override
-			public boolean onPreferenceChange(Preference preference, Object newValue) {
-				setPreferenceSummaryValue(p, resId, (String) newValue);
-				return true;
-			}
+		p.setOnPreferenceChangeListener((preference, newValue) -> {
+			setPreferenceSummaryValue(p, resId, (String) newValue);
+			return true;
 		});
 	}
 

@@ -57,7 +57,7 @@ public class Setup {
 
 	public float getTransparency() {
 		int t = getPreferences().getInt(PreferenceFragment.PREFERENCE_TRANSPARENCY, 20);
-		return (float)t / 100;
+		return (float) t / 100;
 	}
 
 	public boolean keepScreenOn() {
@@ -111,5 +111,9 @@ public class Setup {
 
 	public int getMarginY() {
 		return getInt(PreferenceFragment.PREFERENCE_MARGIN_Y, DEFAULT_MARGIN_Y);
+	}
+
+	public boolean colorfulIcons() {
+		return getPreferences().getBoolean(PreferenceFragment.PREFERENCE_COLORFUL_ICONS, true);
 	}
 }

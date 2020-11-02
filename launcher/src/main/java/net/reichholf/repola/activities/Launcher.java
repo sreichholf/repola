@@ -22,6 +22,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.FragmentActivity;
+
 import android.view.View;
 import android.view.WindowManager;
 
@@ -51,27 +52,20 @@ public class Launcher extends FragmentActivity {
 
 	private void setFullScreen() {
 		try {
-			if (Build.VERSION.SDK_INT < 19) {
-				getWindow().setFlags(
-						WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER,
-						WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
-				);
-			} else {
-				View decorView = getWindow().getDecorView();
+			View decorView = getWindow().getDecorView();
 
-				int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-						| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-						| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-						| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
-						| View.SYSTEM_UI_FLAG_IMMERSIVE;
+			int uiOptions = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+					| View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+					| View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+					| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar
+					| View.SYSTEM_UI_FLAG_IMMERSIVE;
 
-				decorView.setSystemUiVisibility(uiOptions);
+			decorView.setSystemUiVisibility(uiOptions);
 
-				getWindow().setFlags(
-						WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER,
-						WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
-				);
-			}
+			getWindow().setFlags(
+					WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER,
+					WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER
+			);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

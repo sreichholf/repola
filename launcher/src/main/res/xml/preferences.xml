@@ -19,6 +19,11 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto">
 	<PreferenceCategory app:title="@string/app_name">
 		<SwitchPreferenceCompat
+			app:defaultValue="true"
+			app:key="preference_colorful_icons"
+			app:summary="@string/summary_colorful_icons"
+			app:title="@string/colorful_icons" />
+		<SwitchPreferenceCompat
 			app:defaultValue="false"
 			app:key="preference_screen_always_on"
 			app:summary="@string/summary_screen_always_on"

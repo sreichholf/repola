@@ -18,6 +18,7 @@
 package net.reichholf.repola.views;
 
 import android.content.Context;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +29,9 @@ import android.widget.TextView;
 import net.reichholf.repola.AppInfo;
 import net.reichholf.repola.R;
 import net.reichholf.repola.Setup;
+import net.reichholf.repola.Utils;
 
+import androidx.annotation.ColorInt;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 
@@ -49,21 +52,24 @@ public class ApplicationAdapter extends ArrayAdapter<AppInfo> {
 		}
 
 		Setup setup = new Setup(getContext());
+
 		Drawable backgroundDrawable = ContextCompat.getDrawable(getContext(), R.drawable.application_normal);
 		int alpha = 255 - (int) (255 * setup.getTransparency());
 		backgroundDrawable.setAlpha(alpha);
-		view.setBackground(backgroundDrawable);
 
 		ImageView packageImage = view.findViewById(R.id.application_icon);
 		TextView packageName = view.findViewById(R.id.application_name);
 		AppInfo appInfo = getItem(position);
 
 		if (appInfo != null) {
+			if (setup.colorfulIcons())
+				Utils.tintAppIcon(backgroundDrawable, appInfo.getPalette(), alpha);
 			view.setTag(appInfo);
 			packageName.setText(appInfo.getName());
 			if (appInfo.getIcon() != null)
-				packageImage.setImageDrawable(appInfo.getIconHighRes());
+				packageImage.setImageDrawable(appInfo.getIcon());
 		}
+		view.setBackground(backgroundDrawable);
 		return (view);
 	}
 }
