@@ -4,9 +4,9 @@ This a a launcher specifically trimmed for the retroid pocket 2 originally based
 
 ![main](/screenshots/main.png?raw=true "Main Launcher Screen")
 
-![all apps](/screenshots/all.png?raw=true "All Apps")
+![main_plain](/screenshots/main_plain.png?raw=true "Main Launcher Screen without Colorful Icons")
 
-![all apps](/screenshots/all_plain.png?raw=true "All Apps (with "Colorful Icons" disabled)
+![all apps](/screenshots/all.png?raw=true "All Apps")
 
 ![preferences](/screenshots/preferences.png?raw=true "Preferences")
 
