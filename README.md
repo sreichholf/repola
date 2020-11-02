@@ -1,4 +1,4 @@
-# R.E.P.O.L.A.
+# RePoLa
 
 This a a launcher specifically trimmed for the retroid pocket 2 originally based on https://github.com/alescdb/LauncherTV.
 
