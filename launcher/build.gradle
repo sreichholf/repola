@@ -19,8 +19,8 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion '29.0.3'
+    compileSdkVersion 30
+    buildToolsVersion '30.0.2'
 
     lintOptions {
         abortOnError true
@@ -30,7 +30,7 @@ android {
     defaultConfig {
         applicationId "net.reichholf.repola"
         minSdkVersion 21
-        targetSdkVersion 29
+        targetSdkVersion 30
         versionCode 2
         versionName "1.0.1"
     }
@@ -51,7 +51,7 @@ android {
             debuggable false
             jniDebuggable false
             renderscriptDebuggable false
-            minifyEnabled true
+            minifyEnabled false
             proguardFile 'proguard-rules.pro'
             zipAlignEnabled true
             if (project.hasProperty('keystorePassword')) {
@@ -72,7 +72,8 @@ android {
 
 dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.palette:palette:1.0.0'
-    implementation "androidx.preference:preference:1.1.1"
+    implementation 'androidx.preference:preference:1.1.1'
     implementation 'com.google.android.material:material:1.2.1'
 }

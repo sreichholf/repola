@@ -20,7 +20,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 public class ApplicationViewModel extends AndroidViewModel implements Utils.ApplicationListReadyHandler {
-	private MutableLiveData<List<AppInfo>> applications;
+	private static MutableLiveData<List<AppInfo>> sApplications = null;
 	private AsyncTask mTask;
 
 	private class AsyncGetApps extends AsyncTask {
@@ -62,11 +62,11 @@ public class ApplicationViewModel extends AndroidViewModel implements Utils.Appl
 	}
 
 	public LiveData<List<AppInfo>> getApplications() {
-		if (applications == null) {
-			applications = new MutableLiveData<>();
+		if (sApplications == null) {
+			sApplications = new MutableLiveData<>();
 			loadApplications();
 		}
-		return applications;
+		return sApplications;
 	}
 
 	private void loadApplications() {
@@ -79,6 +79,6 @@ public class ApplicationViewModel extends AndroidViewModel implements Utils.Appl
 
 	@Override
 	public void onApplicationListReady(ArrayList<AppInfo> apps) {
-		applications.setValue(apps);
+		sApplications.setValue(apps);
 	}
 }

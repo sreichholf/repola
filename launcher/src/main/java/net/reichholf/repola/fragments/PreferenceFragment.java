@@ -29,6 +29,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 	public static final String PREFERENCE_GITHUB = "preference_github";
 	public static final String PREFERENCE_ABOUT = "preference_about";
 	public static final String PREFERENCE_COLORFUL_ICONS = "preference_colorful_icons";
+	public static final String PREFERENCE_ALL_APPS_COLS = "preference_apps_cols";
 
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {

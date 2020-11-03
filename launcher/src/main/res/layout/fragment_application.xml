@@ -1,5 +1,5 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:focusable="false"
@@ -9,64 +9,77 @@
 	android:paddingRight="@dimen/activity_horizontal_margin"
 	android:paddingTop="@dimen/activity_vertical_margin">
 
+	<ImageButton
+		android:id="@+id/applications"
+		android:layout_width="42dp"
+		android:layout_height="42dp"
+		android:layout_margin="@dimen/activity_horizontal_margin"
+		android:background="@drawable/application_selector"
+		android:padding="4dp"
+		android:scaleType="fitCenter"
+		android:src="@drawable/ic_apps"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/settings"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintHorizontal_chainStyle="packed"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/container" />
+
+	<ImageButton
+		android:id="@+id/settings"
+		android:layout_width="42dp"
+		android:layout_height="42dp"
+		android:layout_margin="@dimen/activity_horizontal_margin"
+		android:background="@drawable/application_selector"
+		android:padding="4dp"
+		android:scaleType="fitCenter"
+		android:src="@drawable/ic_tune"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/wifi"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/applications"
+		app:layout_constraintTop_toBottomOf="@id/container" />
+
+	<ImageButton
+		android:id="@+id/wifi"
+		android:layout_width="42dp"
+		android:layout_height="42dp"
+		android:layout_margin="@dimen/activity_horizontal_margin"
+		android:background="@drawable/application_selector"
+		android:padding="4dp"
+		android:scaleType="fitCenter"
+		android:src="@drawable/ic_wifi"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toStartOf="@+id/bluetooth"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/settings"
+		app:layout_constraintTop_toBottomOf="@id/container" />
+
+	<ImageButton
+		android:id="@+id/bluetooth"
+		android:layout_width="42dp"
+		android:layout_height="42dp"
+		android:layout_margin="@dimen/activity_horizontal_margin"
+		android:background="@drawable/application_selector"
+		android:padding="4dp"
+		android:scaleType="fitCenter"
+		android:src="@drawable/ic_bluetooth"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.5"
+		app:layout_constraintStart_toEndOf="@+id/wifi"
+		app:layout_constraintTop_toBottomOf="@id/container" />
+
 	<LinearLayout
 		android:id="@+id/container"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="0dp"
-		android:layout_weight="1"
-		android:focusable="false"
 		android:gravity="center_vertical"
-		android:orientation="vertical" />
+		android:orientation="vertical"
+		app:layout_constraintBottom_toTopOf="@id/applications"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
-	<RelativeLayout
-		android:layout_width="match_parent"
-		android:layout_height="48dp"
-		android:layout_marginTop="10dp"
-		android:clipChildren="false"
-		android:gravity="center_horizontal">
 
-		<ImageButton
-			android:id="@+id/applications"
-			android:layout_width="42dp"
-			android:layout_height="42dp"
-			android:layout_centerInParent="true"
-			android:layout_marginRight="20dp"
-			android:background="@drawable/application_selector"
-			android:padding="4dp"
-			android:scaleType="fitCenter"
-			android:src="@drawable/ic_apps" />
-
-		<ImageButton
-			android:id="@+id/settings"
-			android:layout_width="42dp"
-			android:layout_height="42dp"
-			android:layout_marginRight="20dp"
-			android:layout_toRightOf="@id/applications"
-			android:background="@drawable/application_selector"
-			android:padding="4dp"
-			android:scaleType="fitCenter"
-			android:src="@drawable/ic_tune" />
-
-		<ImageButton
-			android:id="@+id/wifi"
-			android:layout_width="42dp"
-			android:layout_height="42dp"
-			android:layout_marginRight="20dp"
-			android:layout_toRightOf="@id/settings"
-			android:background="@drawable/application_selector"
-			android:padding="4dp"
-			android:scaleType="fitCenter"
-			android:src="@drawable/ic_wifi" />
-
-		<ImageButton
-			android:id="@+id/bluetooth"
-			android:layout_width="42dp"
-			android:layout_height="42dp"
-			android:layout_toRightOf="@id/wifi"
-			android:background="@drawable/application_selector"
-			android:padding="4dp"
-			android:scaleType="fitCenter"
-			android:src="@drawable/ic_bluetooth" />
-
-	</RelativeLayout>
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

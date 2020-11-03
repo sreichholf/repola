@@ -42,9 +42,11 @@ import net.reichholf.repola.Utils;
 import net.reichholf.repola.activities.ApplicationList;
 import net.reichholf.repola.activities.Preferences;
 import net.reichholf.repola.views.ApplicationView;
+import net.reichholf.repola.views.models.ApplicationViewModel;
 
 import androidx.annotation.ColorInt;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 @SuppressWarnings("PointlessBooleanExpression")
 public class ApplicationFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
@@ -148,9 +150,11 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 			}
 			mContainer.addView(ll);
 		}
-
-		updateApplications();
-		setApplicationOrder();
+		ApplicationViewModel model = new ViewModelProvider(this).get(ApplicationViewModel.class);
+		model.getApplications().observe(getActivity(), applications -> {
+			updateApplications();
+			setApplicationOrder();
+		});
 	}
 
 	private void setApplicationOrder() {
