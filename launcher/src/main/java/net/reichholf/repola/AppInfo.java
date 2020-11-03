@@ -37,21 +37,18 @@ public class AppInfo {
 	private Drawable mIcon;
 	private Palette mPalette;
 	private String mName;
-	private final String mPackageName;
+	private String mPackageName;
 
 
 	public AppInfo(PackageManager packageManager, ResolveInfo resolveInfo) {
-		mPackageName = resolveInfo.activityInfo.packageName;
-		loadIcon(packageManager, resolveInfo.icon, resolveInfo.loadIcon(packageManager));
-
-		try {
-			mName = resolveInfo.loadLabel(packageManager).toString();
-		} catch (Exception e) {
-			mName = mPackageName;
-		}
+		init(packageManager, resolveInfo.activityInfo.applicationInfo);
 	}
 
 	public AppInfo(PackageManager packageManager, ApplicationInfo applicationInfo) {
+		init(packageManager, applicationInfo);
+	}
+
+	private void init(PackageManager packageManager, ApplicationInfo applicationInfo) {
 		mPackageName = applicationInfo.packageName;
 		loadIcon(packageManager, applicationInfo.icon, applicationInfo.loadIcon(packageManager));
 

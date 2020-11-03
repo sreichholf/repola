@@ -116,4 +116,8 @@ public class Setup {
 	public boolean colorfulIcons() {
 		return getPreferences().getBoolean(PreferenceFragment.PREFERENCE_COLORFUL_ICONS, true);
 	}
+
+	public int getAllAppColumns() {
+		return Integer.parseInt(getPreferences().getString(PreferenceFragment.PREFERENCE_ALL_APPS_COLS, "3"));
+	}
 }

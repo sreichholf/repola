@@ -19,28 +19,29 @@ package net.reichholf.repola.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.RippleDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.AdapterView;
 
 import net.reichholf.repola.AppInfo;
 import net.reichholf.repola.R;
 import net.reichholf.repola.Setup;
-import net.reichholf.repola.views.ApplicationAdapter;
+import net.reichholf.repola.adapter.AppInfoAdapter;
+import net.reichholf.repola.adapter.ItemClickSupport;
 import net.reichholf.repola.views.models.ApplicationViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 
-public class ApplicationList extends AppCompatActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener, View.OnClickListener {
+public class ApplicationList extends AppCompatActivity implements View.OnClickListener, ItemClickSupport.OnItemClickListener, ItemClickSupport.OnItemLongClickListener {
 	public static final String PACKAGE_NAME = "package_name";
 	public static final String APPLICATION_NUMBER = "application";
 	public static final String VIEW_TYPE = "view_type";
@@ -52,7 +53,9 @@ public class ApplicationList extends AppCompatActivity implements AdapterView.On
 	//
 	private int mApplication = -1;
 	private int mViewType = 0;
-	private AbsListView mListView;
+	private RecyclerView mRecyclerView;
+	private AppInfoAdapter mAdapter;
+	private ItemClickSupport mItemClickSupport;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -61,73 +64,36 @@ public class ApplicationList extends AppCompatActivity implements AdapterView.On
 		Intent intent = getIntent();
 		Bundle args = intent.getExtras();
 
+		setContentView(R.layout.applications);
 		if (args != null) {
 			if (args.containsKey(APPLICATION_NUMBER))
 				mApplication = args.getInt(APPLICATION_NUMBER);
 			if (args.containsKey(VIEW_TYPE))
 				mViewType = args.getInt(VIEW_TYPE);
+			if (args.getBoolean(SHOW_DELETE, true)) {
+				findViewById(R.id.cancel).setOnClickListener(this);
+				findViewById(R.id.delete).setOnClickListener(this);
+			} else {
+				findViewById(R.id.bottom_panel).setVisibility(View.GONE);
+			}
 		}
 
-		setContentView(mViewType == VIEW_LIST ?
-				R.layout.listview :
-				R.layout.gridview);
+		int spans = new Setup(this).getAllAppColumns();
+		mRecyclerView = findViewById(R.id.list);
+		RecyclerView.LayoutManager lm = mViewType == VIEW_LIST ? new LinearLayoutManager(this) : new GridLayoutManager(this, spans);
+		mRecyclerView.setLayoutManager(lm);
+		mAdapter = new AppInfoAdapter(new ArrayList<>(), mViewType == VIEW_LIST ? R.layout.list_item : R.layout.grid_item);
+		mRecyclerView.setAdapter(mAdapter);
 
-		mListView = findViewById(R.id.list);
-		Setup setup = new Setup(this);
-		RippleDrawable selectorDrawable = (RippleDrawable) ContextCompat.getDrawable(this, R.drawable.application_selector);
-		int alpha = 255 - (int) (255 * setup.getTransparency());
-		selectorDrawable.setAlpha(alpha);
-		mListView.setSelector(selectorDrawable);
+		mItemClickSupport = ItemClickSupport.addTo(mRecyclerView)
+				.setOnItemClickListener(this)
+				.setOnItemLongClickListener(this);
 
 		ApplicationViewModel model = new ViewModelProvider(this).get(ApplicationViewModel.class);
 		model.getApplications().observe(this, applications -> {
 			onApplicationListReady(applications);
 		});
-
-		View v;
-		if ((args != null) && (args.containsKey(SHOW_DELETE))) {
-			if (!args.getBoolean(SHOW_DELETE)) {
-				if ((v = findViewById(R.id.bottom_panel)) != null)
-					v.setVisibility(View.GONE);
-			}
-		}
-		if ((v = findViewById(R.id.delete)) != null)
-			v.setOnClickListener(this);
-		if ((v = findViewById(R.id.cancel)) != null)
-			v.setOnClickListener(this);
 	}
-
-	private AbsListView getListView() {
-		return mListView;
-	}
-
-	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		AppInfo appInfo = (AppInfo) view.getTag();
-		Intent data = new Intent();
-
-		data.putExtra(PACKAGE_NAME, appInfo.getPackageName());
-		data.putExtra(APPLICATION_NUMBER, mApplication);
-
-		if (getParent() == null) {
-			setResult(Activity.RESULT_OK, data);
-		} else {
-			getParent().setResult(Activity.RESULT_OK, data);
-		}
-		finish();
-	}
-
-
-	@Override
-	public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-		AppInfo appInfo = (AppInfo) view.getTag();
-		// Create intent to start new activity
-		Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-		intent.setData(Uri.parse("package:" + appInfo.getPackageName()));
-		startActivity(intent);
-		return true;
-	}
-
 
 	@Override
 	public void onClick(View v) {
@@ -156,11 +122,32 @@ public class ApplicationList extends AppCompatActivity implements AdapterView.On
 	}
 
 	public void onApplicationListReady(List<AppInfo> applications) {
-		getListView().setOnItemClickListener(ApplicationList.this);
-		getListView().setOnItemLongClickListener(ApplicationList.this);
-		getListView().setAdapter(
-				new ApplicationAdapter(ApplicationList.this,
-						mViewType == VIEW_LIST ? R.layout.list_item : R.layout.grid_item,
-						applications.toArray(new AppInfo[0])));
+		mAdapter.updateApps(applications);
+	}
+
+	@Override
+	public void onItemClicked(RecyclerView recyclerView, int position, View v) {
+		AppInfo appInfo = (AppInfo) v.getTag();
+		Intent data = new Intent();
+
+		data.putExtra(PACKAGE_NAME, appInfo.getPackageName());
+		data.putExtra(APPLICATION_NUMBER, mApplication);
+
+		if (getParent() == null) {
+			setResult(Activity.RESULT_OK, data);
+		} else {
+			getParent().setResult(Activity.RESULT_OK, data);
+		}
+		finish();
+	}
+
+	@Override
+	public boolean onItemLongClicked(RecyclerView recyclerView, int position, View v) {
+		AppInfo appInfo = (AppInfo) v.getTag();
+		// Create intent to start new activity
+		Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+		intent.setData(Uri.parse("package:" + appInfo.getPackageName()));
+		startActivity(intent);
+		return true;
 	}
 }

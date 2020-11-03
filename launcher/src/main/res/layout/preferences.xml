@@ -1,20 +1,14 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@color/colorBackground"
 	android:fitsSystemWindows="true"
 	android:orientation="vertical">
 
-	<FrameLayout
-		android:id="@+id/preferences_frame"
+	<androidx.fragment.app.FragmentContainerView
+		android:id="@+id/fragment_container_view"
+		android:name="net.reichholf.repola.fragments.PreferenceFragment"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent" />
 
-		<androidx.fragment.app.FragmentContainerView
-			android:id="@+id/preferences_fragment"
-			android:name="net.reichholf.repola.fragments.PreferenceFragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
-
-	</FrameLayout>
-</LinearLayout>
+</FrameLayout>
