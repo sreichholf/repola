@@ -1,6 +1,6 @@
 # RePoLa
 
-This a a launcher specifically trimmed for the retroid pocket 2 originally based on https://github.com/alescdb/LauncherTV.
+This is a launcher specifically trimmed for the retroid pocket 2 (originally based on https://github.com/alescdb/LauncherTV).
 
 ![main](/screenshots/main.png?raw=true "Main Launcher Screen")
 
@@ -12,4 +12,4 @@ This a a launcher specifically trimmed for the retroid pocket 2 originally based
 
 # Compiling
 
-Use Android Studio with SDK 29 installed
+Use Android Studio with SDK 30 installed
