@@ -63,10 +63,13 @@ public class AppInfo {
 		try {
 			Resources res = packageManager.getResourcesForApplication(mPackageName);
 			Configuration config = res.getConfiguration();
+			int densityOld = config.densityDpi;
 			config.densityDpi = DisplayMetrics.DENSITY_XXHIGH;
 			DisplayMetrics dm = res.getDisplayMetrics();
 			res.updateConfiguration(config, dm);
 			mIcon = ResourcesCompat.getDrawable(res, icon, null);
+			config.densityDpi = densityOld;
+			res.updateConfiguration(config, dm);
 		} catch (Exception e) {
 			mIcon = defaultIcon;
 		}
