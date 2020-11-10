@@ -23,8 +23,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -44,7 +42,7 @@ import net.reichholf.repola.activities.Preferences;
 import net.reichholf.repola.views.ApplicationView;
 import net.reichholf.repola.views.models.ApplicationViewModel;
 
-import androidx.annotation.ColorInt;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -103,7 +101,16 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	@Override
 	public void onResume() {
 		super.onResume();
-		updateApplications();
+	}
+
+	@Override
+	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		ApplicationViewModel model = new ViewModelProvider(this).get(ApplicationViewModel.class);
+		model.getApplications().observe(getActivity(), applications -> {
+			updateApplications();
+			setApplicationOrder();
+		});
 	}
 
 	private void createApplications() {
@@ -150,11 +157,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 			}
 			mContainer.addView(ll);
 		}
-		ApplicationViewModel model = new ViewModelProvider(this).get(ApplicationViewModel.class);
-		model.getApplications().observe(getActivity(), applications -> {
-			updateApplications();
-			setApplicationOrder();
-		});
 	}
 
 	private void setApplicationOrder() {
@@ -213,6 +215,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 
 
 	private void updateApplications() {
+		if (getActivity() == null)
+			return;
 		PackageManager pm = getActivity().getPackageManager();
 		SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
 
@@ -223,14 +227,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 			}
 		}
 	}
-
-
-	private void restartActivity() {
-		Intent intent = getActivity().getIntent();
-		getActivity().finish();
-		startActivity(intent);
-	}
-
 
 	private void writePreferences(int appNum, String packageName) {
 		SharedPreferences prefs = getActivity().getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
@@ -271,16 +267,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	@Override
-	public void onStart() {
-		super.onStart();
-	}
-
-	@Override
-	public void onPause() {
-		super.onPause();
 	}
 
 	@Override
@@ -371,7 +357,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 			case REQUEST_CODE_WALLPAPER:
 				break;
 			case REQUEST_CODE_PREFERENCES:
-				restartActivity();
+				getActivity().recreate();
 				break;
 			case REQUEST_CODE_APPLICATION_START:
 				if (intent != null)
