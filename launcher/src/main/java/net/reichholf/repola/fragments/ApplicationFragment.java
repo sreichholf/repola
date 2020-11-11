@@ -31,6 +31,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import net.reichholf.repola.AppInfo;
@@ -64,6 +65,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	private View mGridView;
 	private View mBluetoothSettings;
 	private Setup mSetup;
+	private ProgressBar mProgress;
 
 
 	public ApplicationFragment() {
@@ -84,6 +86,9 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mWifiSettings = view.findViewById(R.id.wifi);
 		mBluetoothSettings = view.findViewById(R.id.bluetooth);
 		mGridView = view.findViewById(R.id.applications);
+		mProgress = view.findViewById(R.id.progress);
+		mProgress.setVisibility(View.VISIBLE);
+		mProgress.setActivated(true);
 
 		if (mSetup.keepScreenOn())
 			mContainer.setKeepScreenOn(true);
@@ -92,7 +97,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mWifiSettings.setOnClickListener(this);
 		mBluetoothSettings.setOnClickListener(this);
 		mGridView.setOnClickListener(this);
-		createApplications();
 
 		return view;
 	}
@@ -105,10 +109,13 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
+		mProgress.setVisibility(View.VISIBLE);
 		ApplicationViewModel model = new ViewModelProvider(this).get(ApplicationViewModel.class);
 		model.getApplications().observe(getActivity(), applications -> {
+			createApplications();
 			updateApplications();
 			setApplicationOrder();
+			mProgress.setVisibility(View.GONE);
 		});
 	}
 

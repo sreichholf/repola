@@ -76,10 +76,24 @@
 		android:layout_height="0dp"
 		android:gravity="center_vertical"
 		android:orientation="vertical"
+		android:translationZ="4dp"
 		app:layout_constraintBottom_toTopOf="@id/applications"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toTopOf="parent" />
 
+	<ProgressBar
+		android:id="@+id/progress"
+		style="?attr/indeterminateProgressStyle"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:elevation="4dp"
+		android:indeterminate="true"
+		android:translationZ="10dp"
+		android:visibility="visible"
+		app:layout_constraintBottom_toBottomOf="parent"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
