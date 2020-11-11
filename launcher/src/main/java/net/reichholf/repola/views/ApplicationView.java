@@ -95,6 +95,7 @@ public class ApplicationView extends LinearLayout {
 		setClickable(true);
 		setFocusable(true);
 
+
 		Setup setup = new Setup(context);
 		setBackgroundStateDrawable(setup.getTransparency());
 
@@ -115,13 +116,16 @@ public class ApplicationView extends LinearLayout {
 
 	public ApplicationView setText(CharSequence text) {
 		mText.setText(text);
+		showName(true);
 		return (this);
 	}
 
 	public void showName(boolean show) {
-		mText.setVisibility(
-				show ? VISIBLE : GONE
-		);
+		if (mText.getText().length() == 0 || !show) {
+			mText.setVisibility(GONE);
+		} else {
+			mText.setVisibility(VISIBLE);
+		}
 	}
 
 	public String getPackageName() {

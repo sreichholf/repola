@@ -5,6 +5,7 @@
 	android:layout_height="wrap_content"
 	android:layout_margin="3dp"
 	android:background="@color/colorBackground"
+	android:focusable="true"
 	android:gravity="center_vertical"
 	android:orientation="horizontal"
 	android:padding="3dp">

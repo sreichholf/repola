@@ -2,6 +2,7 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
+	android:clipChildren="false"
 	android:duplicateParentState="true"
 	android:focusable="false"
 	android:orientation="vertical"
@@ -18,10 +19,8 @@
 		android:stateListAnimator="@animator/selection"
 		app:layout_constraintBottom_toTopOf="@+id/application_name"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="0.5"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintVertical_chainStyle="packed" />
+		app:layout_constraintTop_toTopOf="parent" />
 
 	<TextView
 		android:id="@+id/application_name"
@@ -40,6 +39,5 @@
 		android:textColor="@android:color/white"
 		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintHorizontal_bias="0.5"
 		app:layout_constraintStart_toStartOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

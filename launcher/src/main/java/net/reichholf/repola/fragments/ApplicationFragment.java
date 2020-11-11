@@ -144,7 +144,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 			ll.setGravity(Gravity.CENTER_VERTICAL);
 			ll.setFocusable(false);
 			ll.setLayoutParams(new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT, 0, 1
+					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, 1
 			));
 
 			for (int x = 0; x < mGridX; x++) {
