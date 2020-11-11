@@ -6,7 +6,6 @@ import net.reichholf.repola.R;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-@SuppressWarnings("deprecation")
 public class Preferences extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

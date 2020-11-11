@@ -35,7 +35,6 @@
 		android:shadowDx="1"
 		android:shadowDy="1"
 		android:shadowRadius="0.5"
-		android:text="test123"
 		android:textAlignment="center"
 		android:textAppearance="?android:attr/textAppearanceSmall"
 		android:textColor="@android:color/white"

@@ -23,7 +23,7 @@ public class ApplicationViewModel extends AndroidViewModel implements Utils.Appl
 	private static MutableLiveData<List<AppInfo>> sApplications = null;
 	private AsyncTask mTask;
 
-	private class AsyncGetApps extends AsyncTask {
+	private class AsyncGetApps extends AsyncTask<Void, Void, Void> {
 		Utils.ApplicationListReadyHandler mReadyHandler;
 		Context mContext;
 		ArrayList<AppInfo> mApplications;
@@ -36,7 +36,7 @@ public class ApplicationViewModel extends AndroidViewModel implements Utils.Appl
 		}
 
 		@Override
-		protected Object doInBackground(Object[] objects) {
+		protected Void doInBackground(Void... voids) {
 			mApplications.clear();
 			PackageManager packageManager = mContext.getPackageManager();
 
@@ -52,7 +52,7 @@ public class ApplicationViewModel extends AndroidViewModel implements Utils.Appl
 		}
 
 		@Override
-		protected void onPostExecute(Object o) {
+		protected void onPostExecute(Void v) {
 			mReadyHandler.onApplicationListReady(mApplications);
 		}
 	}

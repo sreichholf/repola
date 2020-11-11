@@ -46,7 +46,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-@SuppressWarnings("PointlessBooleanExpression")
 public class ApplicationFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 	public static final String TAG = "ApplicationFragment";
 	private static final String PREFERENCES_NAME = "applications";
@@ -290,21 +289,16 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 			return;
 		}
 
-		switch (v.getId()) {
-			case R.id.applications:
-				openApplicationList(ApplicationList.VIEW_GRID, 0, false, REQUEST_CODE_APPLICATION_START);
-				break;
-			case R.id.settings:
-				startActivityForResult(new Intent(getContext(), Preferences.class), REQUEST_CODE_PREFERENCES);
-				break;
-			case R.id.wifi:
-				startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
-				break;
-			case R.id.bluetooth:
-				startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
-				break;
+		int id = v.getId();
+		if (id == R.id.applications) {
+			openApplicationList(ApplicationList.VIEW_GRID, 0, false, REQUEST_CODE_APPLICATION_START);
+		} else if (id == R.id.settings) {
+			startActivityForResult(new Intent(getContext(), Preferences.class), REQUEST_CODE_PREFERENCES);
+		} else if (id == R.id.wifi) {
+			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+		} else if (id == R.id.bluetooth) {
+			startActivity(new Intent(Settings.ACTION_BLUETOOTH_SETTINGS));
 		}
-
 	}
 
 	private void openApplication(ApplicationView v) {

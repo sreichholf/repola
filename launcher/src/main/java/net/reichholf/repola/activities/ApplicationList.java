@@ -97,27 +97,24 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 
 	@Override
 	public void onClick(View v) {
-		switch (v.getId()) {
-			case R.id.delete:
-				Intent data = new Intent();
+		int id = v.getId();
+		if (id == R.id.delete) {
+			Intent data = new Intent();
 
-				data.putExtra(DELETE, true);
-				data.putExtra(APPLICATION_NUMBER, mApplication);
+			data.putExtra(DELETE, true);
+			data.putExtra(APPLICATION_NUMBER, mApplication);
 
-				if (getParent() == null)
-					setResult(Activity.RESULT_OK, data);
-				else
-					getParent().setResult(Activity.RESULT_OK, data);
-				finish();
-				break;
-
-			case R.id.cancel:
-				if (getParent() == null)
-					setResult(Activity.RESULT_CANCELED);
-				else
-					getParent().setResult(Activity.RESULT_CANCELED);
-				finish();
-				break;
+			if (getParent() == null)
+				setResult(Activity.RESULT_OK, data);
+			else
+				getParent().setResult(Activity.RESULT_OK, data);
+			finish();
+		} else if (id == R.id.cancel) {
+			if (getParent() == null)
+				setResult(Activity.RESULT_CANCELED);
+			else
+				getParent().setResult(Activity.RESULT_CANCELED);
+			finish();
 		}
 	}
 
