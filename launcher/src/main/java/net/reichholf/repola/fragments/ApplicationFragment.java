@@ -97,7 +97,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mWifiSettings.setOnClickListener(this);
 		mBluetoothSettings.setOnClickListener(this);
 		mGridView.setOnClickListener(this);
-
+		createApplications();
 		return view;
 	}
 
@@ -112,10 +112,10 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mProgress.setVisibility(View.VISIBLE);
 		ApplicationViewModel model = new ViewModelProvider(this).get(ApplicationViewModel.class);
 		model.getApplications().observe(getActivity(), applications -> {
-			createApplications();
 			updateApplications();
 			setApplicationOrder();
 			mProgress.setVisibility(View.GONE);
+			mContainer.setVisibility(View.VISIBLE);
 		});
 	}
 
@@ -163,6 +163,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 			}
 			mContainer.addView(ll);
 		}
+		mContainer.setVisibility(View.INVISIBLE);
 	}
 
 	private void setApplicationOrder() {
