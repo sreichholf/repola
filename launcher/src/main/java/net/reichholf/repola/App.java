@@ -18,17 +18,36 @@
 package net.reichholf.repola;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.util.Log;
 
 public class App extends Application {
-	private static App _instance;
-
-	public static App get() {
-		return _instance;
-	}
+	private static String LOG_TAG = App.class.getCanonicalName();
+	private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			Log.w(LOG_TAG, "Package changed!");
+			AppManager.getInstance(getApplicationContext()).getApplications(true);
+		}
+	};
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		_instance = this;
+		AppManager.getInstance(getApplicationContext()).getApplications();
+		IntentFilter filter = new IntentFilter();
+		filter.addAction(Intent.ACTION_PACKAGE_ADDED);
+		filter.addAction(Intent.ACTION_PACKAGE_REMOVED);
+		filter.addDataScheme("package");
+		registerReceiver(mReceiver, filter);
+	}
+
+	@Override
+	public void onTerminate() {
+		unregisterReceiver(mReceiver);
+		super.onTerminate();
 	}
 }

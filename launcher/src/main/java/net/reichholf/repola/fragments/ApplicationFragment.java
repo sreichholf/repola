@@ -31,7 +31,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import net.reichholf.repola.AppInfo;
@@ -41,11 +40,9 @@ import net.reichholf.repola.Utils;
 import net.reichholf.repola.activities.ApplicationList;
 import net.reichholf.repola.activities.Preferences;
 import net.reichholf.repola.views.ApplicationView;
-import net.reichholf.repola.views.models.ApplicationViewModel;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
 public class ApplicationFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 	public static final String TAG = "ApplicationFragment";
@@ -54,7 +51,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	private static final int REQUEST_CODE_WALLPAPER = 0x1F;
 	private static final int REQUEST_CODE_APPLICATION_START = 0x20;
 	private static final int REQUEST_CODE_PREFERENCES = 0x21;
-	private static final int REQUEST_CODE_WIFI = 0x22;
 
 	private int mGridX = 3;
 	private int mGridY = 2;
@@ -65,8 +61,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	private View mGridView;
 	private View mBluetoothSettings;
 	private Setup mSetup;
-	private ProgressBar mProgress;
-
 
 	public ApplicationFragment() {
 		// Required empty public constructor
@@ -86,9 +80,6 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mWifiSettings = view.findViewById(R.id.wifi);
 		mBluetoothSettings = view.findViewById(R.id.bluetooth);
 		mGridView = view.findViewById(R.id.applications);
-		mProgress = view.findViewById(R.id.progress);
-		mProgress.setVisibility(View.VISIBLE);
-		mProgress.setActivated(true);
 
 		if (mSetup.keepScreenOn())
 			mContainer.setKeepScreenOn(true);
@@ -109,14 +100,9 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	@Override
 	public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mProgress.setVisibility(View.VISIBLE);
-		ApplicationViewModel model = new ViewModelProvider(this).get(ApplicationViewModel.class);
-		model.getApplications().observe(getActivity(), applications -> {
-			updateApplications();
-			setApplicationOrder();
-			mProgress.setVisibility(View.GONE);
-			mContainer.setVisibility(View.VISIBLE);
-		});
+		updateApplications();
+		setApplicationOrder();
+		mContainer.setVisibility(View.VISIBLE);
 	}
 
 	private void createApplications() {
