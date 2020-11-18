@@ -23,6 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.text.TextUtils;
@@ -30,6 +31,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -88,6 +90,12 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mWifiSettings.setOnClickListener(this);
 		mBluetoothSettings.setOnClickListener(this);
 		mGridView.setOnClickListener(this);
+
+		setButtonCorners(mGridView);
+		setButtonCorners(mSettings);
+		setButtonCorners(mWifiSettings);
+		setButtonCorners(mBluetoothSettings);
+
 		createApplications();
 		return view;
 	}
@@ -105,6 +113,16 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mContainer.setVisibility(View.VISIBLE);
 	}
 
+	private void setButtonCorners(View view) {
+		view.setOutlineProvider(new ViewOutlineProvider() {
+			@Override
+			public void getOutline(View view, Outline outline) {
+				outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), getResources().getDimension(R.dimen.application_corner_radius));
+			}
+		});
+		view.setClipToOutline(true);
+	}
+
 	private void createApplications() {
 		mContainer.removeAllViews();
 
@@ -116,7 +134,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		if (mGridY < 1)
 			mGridY = 1;
 
-		int margin = Utils.pixelFromDp(getContext(),6);
+		int margin = Utils.pixelFromDp(getContext(), 6);
 
 		boolean showNames = mSetup.showNames();
 

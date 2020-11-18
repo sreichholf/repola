@@ -47,4 +47,6 @@
 	<string name="title_general">General Settings</string>
 	<string name="summary_apps_cols">Number of columns for the all apps view</string>
 	<string name="title_apps_cols">All Apps - Columns</string>
+	<string name="corner_radius">Corner Radius</string>
+	<string name="corner_radius_summary">%s</string>
 </resources>

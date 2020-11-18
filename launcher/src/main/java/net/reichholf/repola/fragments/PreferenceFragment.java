@@ -12,7 +12,9 @@ import net.reichholf.repola.R;
 import java.util.Locale;
 
 import androidx.preference.ListPreference;
+import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
+import androidx.preference.SeekBarPreference;
 
 public class PreferenceFragment extends PreferenceFragmentCompat {
 	public static final String PREFERENCE_TRANSPARENCY = "preference_transparency_new";
@@ -26,6 +28,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 	public static final String PREFERENCE_ABOUT = "preference_about";
 	public static final String PREFERENCE_COLORFUL_ICONS = "preference_colorful_icons";
 	public static final String PREFERENCE_ALL_APPS_COLS = "preference_apps_cols";
+	public static final String PREFERENCE_CORNER_RADIUS = "preference_corner_radius";
 
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -33,6 +36,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 
 		bindSummary(PREFERENCE_GRID_X, R.string.summary_grid_x);
 		bindSummary(PREFERENCE_GRID_Y, R.string.summary_grid_y);
+		bindSeekbarSummary(PREFERENCE_CORNER_RADIUS, R.string.corner_radius_summary);
 
 		findPreference(PREFERENCE_GITHUB).setOnPreferenceClickListener(preference -> {
 			try {
@@ -68,7 +72,16 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 		});
 	}
 
-	private void setPreferenceSummaryValue(ListPreference prefs, int resId, String value) {
+	private void bindSeekbarSummary(String key, final int resId) {
+		final SeekBarPreference p = findPreference(key);
+		setPreferenceSummaryValue(p, resId, String.valueOf(p.getValue()));
+		p.setOnPreferenceChangeListener((preference, newValue) -> {
+			setPreferenceSummaryValue(p, resId, String.valueOf(newValue));
+			return true;
+		});
+	}
+
+	private void setPreferenceSummaryValue(Preference prefs, int resId, String value) {
 		prefs.setSummary(
 				String.format(Locale.getDefault(), getString(resId), value)
 		);

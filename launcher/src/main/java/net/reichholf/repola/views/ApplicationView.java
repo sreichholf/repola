@@ -20,27 +20,31 @@ package net.reichholf.repola.views;
 
 import android.animation.AnimatorInflater;
 import android.content.Context;
+import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
+import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import net.reichholf.repola.R;
 import net.reichholf.repola.Setup;
+import net.reichholf.repola.Utils;
 
 import java.util.Locale;
 
 import androidx.annotation.DrawableRes;
+import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 
 import static android.content.ContentValues.TAG;
 
-public class ApplicationView extends LinearLayout {
+public class ApplicationView extends CardView {
 	private OnClickListener mMenuClickListener;
 	private ImageView mIcon;
 	private TextView mText;
@@ -89,19 +93,22 @@ public class ApplicationView extends LinearLayout {
 		setBackground(backgroundDrawable);
 	}
 
-	@SuppressWarnings("UnusedParameters")
 	private void initialize(Context context, AttributeSet attrs, Integer defStyle) {
 		inflate(context, R.layout.application, this);
 
 		setClickable(true);
 		setFocusable(true);
-		setClipToOutline(false);
-		setClipChildren(false);
 
 		Setup setup = new Setup(context);
 		setBackgroundStateDrawable(setup.getTransparency());
 		setStateListAnimator(AnimatorInflater.loadStateListAnimator(context, R.animator.selection));
-
+		setOutlineProvider(new ViewOutlineProvider() {
+			@Override
+			public void getOutline(View view, Outline outline) {
+				outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), Utils.pixelFromDp(context, setup.getCornerRadius()));
+			}
+		});
+		setClipToOutline(true);
 		mIcon = findViewById(R.id.application_icon);
 		mText = findViewById(R.id.application_name);
 	}

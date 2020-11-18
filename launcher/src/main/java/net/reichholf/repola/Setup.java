@@ -112,4 +112,8 @@ public class Setup {
 	public int getAllAppColumns() {
 		return Integer.parseInt(getPreferences().getString(PreferenceFragment.PREFERENCE_ALL_APPS_COLS, "3"));
 	}
+
+	public int getCornerRadius() {
+		return getPreferences().getInt(PreferenceFragment.PREFERENCE_CORNER_RADIUS, 4);
+	}
 }

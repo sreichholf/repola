@@ -1,9 +1,11 @@
 package net.reichholf.repola.adapter;
 
+import android.graphics.Outline;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -60,6 +62,14 @@ public class AppInfoAdapter extends RecyclerView.Adapter<AppInfoAdapter.ViewHold
 			super(itemView);
 			mPackageImage = itemView.findViewById(R.id.application_icon);
 			mPackageName = itemView.findViewById(R.id.application_name);
+			Setup setup = new Setup(itemView.getContext());
+			itemView.setOutlineProvider(new ViewOutlineProvider() {
+				@Override
+				public void getOutline(View view, Outline outline) {
+					outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), Utils.pixelFromDp(itemView.getContext(), setup.getCornerRadius()));
+				}
+			});
+			itemView.setClipToOutline(true);
 		}
 
 		public void bind(AppInfo appInfo) {

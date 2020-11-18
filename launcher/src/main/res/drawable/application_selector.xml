@@ -3,14 +3,6 @@
 	android:color="?attr/colorPrimaryDark"
 	android:enterFadeDuration="@android:integer/config_mediumAnimTime"
 	android:exitFadeDuration="@android:integer/config_mediumAnimTime">
-
-	<!-- mask here... -->
-	<item android:id="@android:id/mask">
-		<shape android:shape="rectangle">
-			<corners android:radius="?attr/applicationCornerRadius" />
-			<solid android:color="@color/white" />
-		</shape>
-	</item>
 	<item>
 		<selector>
 			<!-- focused -->

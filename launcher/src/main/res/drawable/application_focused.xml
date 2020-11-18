@@ -1,10 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-	<corners android:radius="?attr/applicationCornerRadius" />
-	<padding
-		android:bottom="?attr/applicationCornerRadius"
-		android:left="?attr/applicationCornerRadius"
-		android:right="?attr/applicationCornerRadius"
-		android:top="?attr/applicationCornerRadius" />
-	<solid android:color="?attr/colorControlHighlight" />
+1	<solid android:color="?attr/colorControlHighlight" />
 </shape>

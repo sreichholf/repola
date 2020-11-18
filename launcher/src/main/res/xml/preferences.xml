@@ -60,6 +60,13 @@
 	<PreferenceCategory
 		app:key="category_general"
 		app:title="@string/title_general">
+		<SeekBarPreference
+			app:key="preference_corner_radius"
+			app:title="@string/corner_radius"
+			app:summary="@string/corner_radius_summary"
+			app:defaultValue="1"
+			app:seekBarIncrement="1"
+			android:max="48"/>
 		<ListPreference
 			app:defaultValue="3"
 			app:entries="@array/grid_x"
