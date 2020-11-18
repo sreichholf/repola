@@ -41,6 +41,7 @@ import net.reichholf.repola.Setup;
 import net.reichholf.repola.Utils;
 import net.reichholf.repola.activities.ApplicationList;
 import net.reichholf.repola.activities.Preferences;
+import net.reichholf.repola.databinding.FragmentApplicationBinding;
 import net.reichholf.repola.views.ApplicationView;
 
 import androidx.annotation.Nullable;
@@ -56,13 +57,9 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 
 	private int mGridX = 3;
 	private int mGridY = 2;
-	private LinearLayout mContainer;
-	private ApplicationView[][] mApplications = null;
-	private View mSettings;
-	private View mWifiSettings;
-	private View mGridView;
-	private View mBluetoothSettings;
 	private Setup mSetup;
+	private ApplicationView[][] mApplications = null;
+	private FragmentApplicationBinding mBinding;
 
 	public ApplicationFragment() {
 		// Required empty public constructor
@@ -74,30 +71,22 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View view = inflater.inflate(R.layout.fragment_application, container, false);
-
+		mBinding = FragmentApplicationBinding.inflate(inflater);
 		mSetup = new Setup(getContext());
-		mContainer = view.findViewById(R.id.container);
-		mSettings = view.findViewById(R.id.settings);
-		mWifiSettings = view.findViewById(R.id.wifi);
-		mBluetoothSettings = view.findViewById(R.id.bluetooth);
-		mGridView = view.findViewById(R.id.applications);
-
 		if (mSetup.keepScreenOn())
-			mContainer.setKeepScreenOn(true);
+			mBinding.container.setKeepScreenOn(true);
 
-		mSettings.setOnClickListener(this);
-		mWifiSettings.setOnClickListener(this);
-		mBluetoothSettings.setOnClickListener(this);
-		mGridView.setOnClickListener(this);
+		mBinding.settings.setOnClickListener(this);
+		mBinding.settings.setOnClickListener(this);
+		mBinding.bluetooth.setOnClickListener(this);
+		mBinding.applications.setOnClickListener(this);
 
-		setButtonCorners(mGridView);
-		setButtonCorners(mSettings);
-		setButtonCorners(mWifiSettings);
-		setButtonCorners(mBluetoothSettings);
-
+		setButtonCorners(mBinding.applications);
+		setButtonCorners(mBinding.settings);
+		setButtonCorners(mBinding.settings);
+		setButtonCorners(mBinding.bluetooth);
 		createApplications();
-		return view;
+		return mBinding.getRoot();
 	}
 
 	@Override
@@ -110,21 +99,21 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		super.onActivityCreated(savedInstanceState);
 		updateApplications();
 		setApplicationOrder();
-		mContainer.setVisibility(View.VISIBLE);
+		mBinding.container.setVisibility(View.VISIBLE);
 	}
 
 	private void setButtonCorners(View view) {
 		view.setOutlineProvider(new ViewOutlineProvider() {
 			@Override
 			public void getOutline(View view, Outline outline) {
-				outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), getResources().getDimension(R.dimen.application_corner_radius));
+				outline.setRoundRect(0, 0, view.getWidth(), view.getHeight(), getResources().getDimension(R.dimen.button_corner_radius));
 			}
 		});
 		view.setClipToOutline(true);
 	}
 
 	private void createApplications() {
-		mContainer.removeAllViews();
+		mBinding.container.removeAllViews();
 
 		mGridX = mSetup.getGridX();
 		mGridY = mSetup.getGridY();
@@ -164,9 +153,9 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 				ll.addView(av);
 				mApplications[y][x] = av;
 			}
-			mContainer.addView(ll);
+			mBinding.container.addView(ll);
 		}
-		mContainer.setVisibility(View.INVISIBLE);
+		mBinding.container.setVisibility(View.INVISIBLE);
 	}
 
 	private void setApplicationOrder() {
@@ -202,25 +191,25 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		}
 
 
-		mGridView.setNextFocusLeftId(mApplications[mGridY - 1][mGridX - 1].getId());
-		mGridView.setNextFocusRightId(R.id.settings);
-		mGridView.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
-		mGridView.setNextFocusDownId(mApplications[0][0].getId());
+		mBinding.applications.setNextFocusLeftId(mApplications[mGridY - 1][mGridX - 1].getId());
+		mBinding.applications.setNextFocusRightId(R.id.settings);
+		mBinding.applications.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
+		mBinding.applications.setNextFocusDownId(mApplications[0][0].getId());
 
-		mSettings.setNextFocusLeftId(R.id.applications);
-		mSettings.setNextFocusRightId(R.id.wifi);
-		mSettings.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
-		mSettings.setNextFocusDownId(mApplications[0][0].getId());
+		mBinding.settings.setNextFocusLeftId(R.id.applications);
+		mBinding.settings.setNextFocusRightId(R.id.wifi);
+		mBinding.settings.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
+		mBinding.settings.setNextFocusDownId(mApplications[0][0].getId());
 
-		mWifiSettings.setNextFocusLeftId(R.id.settings);
-		mWifiSettings.setNextFocusRightId(R.id.bluetooth);
-		mWifiSettings.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
-		mWifiSettings.setNextFocusDownId(mApplications[0][0].getId());
+		mBinding.settings.setNextFocusLeftId(R.id.settings);
+		mBinding.settings.setNextFocusRightId(R.id.bluetooth);
+		mBinding.settings.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
+		mBinding.settings.setNextFocusDownId(mApplications[0][0].getId());
 
-		mBluetoothSettings.setNextFocusLeftId(R.id.wifi);
-		mBluetoothSettings.setNextFocusRightId(mApplications[0][0].getId());
-		mBluetoothSettings.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
-		mBluetoothSettings.setNextFocusDownId(mApplications[0][0].getId());
+		mBinding.bluetooth.setNextFocusLeftId(R.id.wifi);
+		mBinding.bluetooth.setNextFocusRightId(mApplications[0][0].getId());
+		mBinding.bluetooth.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
+		mBinding.bluetooth.setNextFocusDownId(mApplications[0][0].getId());
 	}
 
 

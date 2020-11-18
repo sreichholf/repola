@@ -27,6 +27,10 @@ android {
         lintConfig file('lint.xml')
     }
 
+    buildFeatures {
+        viewBinding true
+    }
+
     defaultConfig {
         applicationId "net.reichholf.repola"
         minSdkVersion 21
@@ -64,6 +68,7 @@ android {
             testCoverageEnabled true
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

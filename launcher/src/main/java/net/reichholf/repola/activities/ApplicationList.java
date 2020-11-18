@@ -29,6 +29,7 @@ import net.reichholf.repola.R;
 import net.reichholf.repola.Setup;
 import net.reichholf.repola.adapter.AppInfoAdapter;
 import net.reichholf.repola.adapter.ItemClickSupport;
+import net.reichholf.repola.databinding.ApplicationsBinding;
 import net.reichholf.repola.views.models.ApplicationViewModel;
 
 import java.util.ArrayList;
@@ -53,7 +54,7 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 	//
 	private int mApplication = -1;
 	private int mViewType = 0;
-	private RecyclerView mRecyclerView;
+	private ApplicationsBinding mBinding;
 	private AppInfoAdapter mAdapter;
 	private ItemClickSupport mItemClickSupport;
 
@@ -63,8 +64,8 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 
 		Intent intent = getIntent();
 		Bundle args = intent.getExtras();
-
-		setContentView(R.layout.applications);
+		mBinding = ApplicationsBinding.inflate(getLayoutInflater());
+		setContentView(mBinding.getRoot());
 		if (args != null) {
 			if (args.containsKey(APPLICATION_NUMBER))
 				mApplication = args.getInt(APPLICATION_NUMBER);
@@ -79,13 +80,12 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 		}
 
 		int spans = new Setup(this).getAllAppColumns();
-		mRecyclerView = findViewById(R.id.list);
 		RecyclerView.LayoutManager lm = mViewType == VIEW_LIST ? new LinearLayoutManager(this) : new GridLayoutManager(this, spans);
-		mRecyclerView.setLayoutManager(lm);
+		mBinding.list.setLayoutManager(lm);
 		mAdapter = new AppInfoAdapter(new ArrayList<>(), mViewType == VIEW_LIST ? R.layout.list_item : R.layout.grid_item);
-		mRecyclerView.setAdapter(mAdapter);
+		mBinding.list.setAdapter(mAdapter);
 
-		mItemClickSupport = ItemClickSupport.addTo(mRecyclerView)
+		mItemClickSupport = ItemClickSupport.addTo(mBinding.list)
 				.setOnItemClickListener(this)
 				.setOnItemLongClickListener(this);
 

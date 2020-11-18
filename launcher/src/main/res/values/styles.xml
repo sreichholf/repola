@@ -39,7 +39,7 @@
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="colorControlHighlight">?attr/colorPrimary</item>
 		<item name="materialButtonStyle">@style/TintedButton</item>
-		<item name="applicationCornerRadius">@dimen/application_corner_radius</item>
+		<item name="applicationCornerRadius">@dimen/button_corner_radius</item>
 	</style>
 
 	<style name="TintedButton" parent="Widget.MaterialComponents.Button.TextButton"></style>
