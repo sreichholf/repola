@@ -116,8 +116,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		if (mGridY < 1)
 			mGridY = 1;
 
-		int marginX = Utils.pixelFromDp(getContext(), mSetup.getMarginX());
-		int marginY = Utils.pixelFromDp(getContext(), mSetup.getMarginY());
+		int margin = Utils.pixelFromDp(getContext(),6);
 
 		boolean showNames = mSetup.showNames();
 
@@ -142,7 +141,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 				av.showName(showNames);
 				av.setId(View.generateViewId());
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-				lp.setMargins(marginX, marginY, marginX, marginY);
+				lp.setMargins(margin, margin, margin, margin);
 				av.setLayoutParams(lp);
 				ll.addView(av);
 				mApplications[y][x] = av;

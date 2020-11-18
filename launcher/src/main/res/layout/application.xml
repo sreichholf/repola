@@ -16,7 +16,6 @@
 		android:duplicateParentState="true"
 		android:focusable="false"
 		android:src="@drawable/ic_add"
-		android:stateListAnimator="@animator/selection"
 		app:layout_constraintBottom_toTopOf="@+id/application_name"
 		app:layout_constraintEnd_toEndOf="parent"
 		app:layout_constraintStart_toStartOf="parent"

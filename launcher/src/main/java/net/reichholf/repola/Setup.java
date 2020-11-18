@@ -105,14 +105,6 @@ public class Setup {
 		return getInt(PreferenceFragment.PREFERENCE_GRID_Y, DEFAULT_GRID_Y);
 	}
 
-	public int getMarginX() {
-		return getInt(PreferenceFragment.PREFERENCE_MARGIN_X, DEFAULT_MARGIN_X);
-	}
-
-	public int getMarginY() {
-		return getInt(PreferenceFragment.PREFERENCE_MARGIN_Y, DEFAULT_MARGIN_Y);
-	}
-
 	public boolean colorfulIcons() {
 		return getPreferences().getBoolean(PreferenceFragment.PREFERENCE_COLORFUL_ICONS, true);
 	}

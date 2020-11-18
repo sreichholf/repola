@@ -56,24 +56,17 @@
 			app:key="preference_grid_y"
 			app:summary="@string/summary_grid_y"
 			app:title="@string/title_grid_y" />
-		<ListPreference
-			app:defaultValue="5"
-			app:entries="@array/margins"
-			app:entryValues="@array/margins"
-			app:key="preference_margin_x"
-			app:summary="@string/summary_margin_x"
-			app:title="@string/title_margin_x" />
-		<ListPreference
-			app:defaultValue="5"
-			app:entries="@array/margins"
-			app:entryValues="@array/margins"
-			app:key="preference_margin_y"
-			app:summary="@string/summary_margin_y"
-			app:title="@string/title_margin_y" />
 	</PreferenceCategory>
 	<PreferenceCategory
 		app:key="category_general"
 		app:title="@string/title_general">
+		<ListPreference
+			app:defaultValue="3"
+			app:entries="@array/grid_x"
+			app:entryValues="@array/grid_x"
+			app:key="preference_apps_cols"
+			app:summary="@string/summary_apps_cols"
+			app:title="@string/title_apps_cols" />
 		<SeekBarPreference
 			android:max="100"
 			app:defaultValue="20"
@@ -83,13 +76,6 @@
 			app:seekBarIncrement="5"
 			app:showSeekBarValue="true"
 			app:title="@string/title_transparency" />
-		<ListPreference
-			app:defaultValue="3"
-			app:entries="@array/grid_x"
-			app:entryValues="@array/grid_x"
-			app:key="preference_apps_cols"
-			app:summary="@string/summary_apps_cols"
-			app:title="@string/title_apps_cols" />
 	</PreferenceCategory>
 	<PreferenceCategory app:title="@string/system">
 		<Preference

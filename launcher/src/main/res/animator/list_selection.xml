@@ -7,7 +7,7 @@
 			<objectAnimator
 				android:duration="@android:integer/config_shortAnimTime"
 				android:propertyName="scaleX"
-				android:valueTo="1.07"
+				android:valueTo="1.02"
 				android:valueType="floatType" />
 			<objectAnimator
 				android:duration="@android:integer/config_shortAnimTime"

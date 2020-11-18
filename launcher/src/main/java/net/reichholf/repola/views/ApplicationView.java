@@ -18,6 +18,7 @@
 
 package net.reichholf.repola.views;
 
+import android.animation.AnimatorInflater;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
@@ -94,10 +95,12 @@ public class ApplicationView extends LinearLayout {
 
 		setClickable(true);
 		setFocusable(true);
-
+		setClipToOutline(false);
+		setClipChildren(false);
 
 		Setup setup = new Setup(context);
 		setBackgroundStateDrawable(setup.getTransparency());
+		setStateListAnimator(AnimatorInflater.loadStateListAnimator(context, R.animator.selection));
 
 		mIcon = findViewById(R.id.application_icon);
 		mText = findViewById(R.id.application_name);
