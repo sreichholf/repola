@@ -76,14 +76,14 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		if (mSetup.keepScreenOn())
 			mBinding.container.setKeepScreenOn(true);
 
-		mBinding.settings.setOnClickListener(this);
-		mBinding.settings.setOnClickListener(this);
-		mBinding.bluetooth.setOnClickListener(this);
 		mBinding.applications.setOnClickListener(this);
+		mBinding.settings.setOnClickListener(this);
+		mBinding.wifi.setOnClickListener(this);
+		mBinding.bluetooth.setOnClickListener(this);
 
 		setButtonCorners(mBinding.applications);
 		setButtonCorners(mBinding.settings);
-		setButtonCorners(mBinding.settings);
+		setButtonCorners(mBinding.wifi);
 		setButtonCorners(mBinding.bluetooth);
 		createApplications();
 		return mBinding.getRoot();
@@ -201,10 +201,10 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		mBinding.settings.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
 		mBinding.settings.setNextFocusDownId(mApplications[0][0].getId());
 
-		mBinding.settings.setNextFocusLeftId(R.id.settings);
-		mBinding.settings.setNextFocusRightId(R.id.bluetooth);
-		mBinding.settings.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
-		mBinding.settings.setNextFocusDownId(mApplications[0][0].getId());
+		mBinding.wifi.setNextFocusLeftId(R.id.settings);
+		mBinding.wifi.setNextFocusRightId(R.id.bluetooth);
+		mBinding.wifi.setNextFocusUpId(mApplications[mGridY - 1][mGridX - 1].getId());
+		mBinding.wifi.setNextFocusDownId(mApplications[0][0].getId());
 
 		mBinding.bluetooth.setNextFocusLeftId(R.id.wifi);
 		mBinding.bluetooth.setNextFocusRightId(mApplications[0][0].getId());
