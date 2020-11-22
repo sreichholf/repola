@@ -27,8 +27,6 @@ import net.reichholf.repola.fragments.PreferenceFragment;
 public class Setup {
 	private static final int DEFAULT_GRID_X = 3;
 	private static final int DEFAULT_GRID_Y = 2;
-	private static final int DEFAULT_MARGIN_X = 5;
-	private static final int DEFAULT_MARGIN_Y = 5;
 
 	private final Context mContext;
 	private SharedPreferences mPreferences;
@@ -60,15 +58,6 @@ public class Setup {
 		return (float) t / 100;
 	}
 
-	public boolean keepScreenOn() {
-		try {
-			return (getPreferences().getBoolean(PreferenceFragment.PREFERENCE_SCREEN_ON, false));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (false);
-	}
-
 	public boolean iconsLocked() {
 		try {
 			return (getPreferences().getBoolean(PreferenceFragment.PREFERENCE_LOCKED, false));
@@ -88,12 +77,7 @@ public class Setup {
 	}
 
 	public boolean showNames() {
-		try {
-			return (getPreferences().getBoolean(PreferenceFragment.PREFERENCE_SHOW_NAME, true));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return (true);
+		return getPreferences().getBoolean(PreferenceFragment.PREFERENCE_SHOW_NAME, true);
 	}
 
 

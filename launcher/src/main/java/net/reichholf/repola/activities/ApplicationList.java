@@ -72,10 +72,10 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 			if (args.containsKey(VIEW_TYPE))
 				mViewType = args.getInt(VIEW_TYPE);
 			if (args.getBoolean(SHOW_DELETE, true)) {
-				findViewById(R.id.cancel).setOnClickListener(this);
-				findViewById(R.id.delete).setOnClickListener(this);
+				mBinding.cancel.setOnClickListener(this);
+				mBinding.delete.setOnClickListener(this);
 			} else {
-				findViewById(R.id.bottom_panel).setVisibility(View.GONE);
+				mBinding.bottomPanel.setVisibility(View.GONE);
 			}
 		}
 

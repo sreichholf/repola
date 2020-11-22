@@ -24,15 +24,10 @@
 			app:summary="@string/summary_colorful_icons"
 			app:title="@string/colorful_icons" />
 		<SwitchPreferenceCompat
-			app:defaultValue="false"
-			app:key="preference_screen_always_on"
-			app:summary="@string/summary_screen_always_on"
-			app:title="@string/title_screen_always_on" />
-		<SwitchPreferenceCompat
 			app:defaultValue="true"
 			app:key="preference_show_name"
 			app:summary="@string/summary_show_name"
-			app:title="@string/title_show_name" />
+			app:title="@string/show_application_name" />
 		<SwitchPreferenceCompat
 			app:defaultValue="false"
 			app:key="preference_locked"

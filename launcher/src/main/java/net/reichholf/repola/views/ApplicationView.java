@@ -20,21 +20,23 @@ package net.reichholf.repola.views;
 
 import android.animation.AnimatorInflater;
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Outline;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.RippleDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewOutlineProvider;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import net.reichholf.repola.R;
 import net.reichholf.repola.Setup;
 import net.reichholf.repola.Utils;
+import net.reichholf.repola.databinding.ApplicationBinding;
 
 import java.util.Locale;
 
@@ -46,10 +48,10 @@ import static android.content.ContentValues.TAG;
 
 public class ApplicationView extends CardView {
 	private OnClickListener mMenuClickListener;
-	private ImageView mIcon;
-	private TextView mText;
+	private ApplicationBinding mBinding;
 	private String mPackageName;
 	private int mPosition;
+	private BitmapDrawable mCustomBitmap;
 
 	public ApplicationView(Context context) {
 		super(context);
@@ -94,8 +96,8 @@ public class ApplicationView extends CardView {
 	}
 
 	private void initialize(Context context, AttributeSet attrs, Integer defStyle) {
-		inflate(context, R.layout.application, this);
-
+		View v = inflate(context, R.layout.application, this);
+		mBinding = ApplicationBinding.bind(v.findViewById(R.id.application_container));
 		setClickable(true);
 		setFocusable(true);
 
@@ -109,32 +111,31 @@ public class ApplicationView extends CardView {
 			}
 		});
 		setClipToOutline(true);
-		mIcon = findViewById(R.id.application_icon);
-		mText = findViewById(R.id.application_name);
 	}
 
 	@SuppressWarnings("SameParameterValue")
 	public ApplicationView setImageResource(@DrawableRes int res) {
-		mIcon.setImageResource(res);
-		return (this);
+		if (mCustomBitmap == null)
+			mBinding.applicationIcon.setImageResource(res);
+		return this;
 	}
 
 	public ApplicationView setImageDrawable(Drawable drawable) {
-		mIcon.setImageDrawable(drawable);
-		return (this);
+		if (mCustomBitmap == null)
+			mBinding.applicationIcon.setImageDrawable(drawable);
+		return this;
 	}
 
 	public ApplicationView setText(CharSequence text) {
-		mText.setText(text);
-		showName(true);
-		return (this);
+		mBinding.applicationName.setText(text);
+		return this;
 	}
 
 	public void showName(boolean show) {
-		if (mText.getText().length() == 0 || !show) {
-			mText.setVisibility(GONE);
+		if (!show || mBinding.applicationName.getText().length() == 0) {
+			mBinding.applicationName.setVisibility(GONE);
 		} else {
-			mText.setVisibility(VISIBLE);
+			mBinding.applicationName.setVisibility(VISIBLE);
 		}
 	}
 
@@ -145,11 +146,11 @@ public class ApplicationView extends CardView {
 	@SuppressWarnings("UnusedReturnValue")
 	public ApplicationView setPackageName(String packageName) {
 		mPackageName = packageName;
-		return (this);
+		return this;
 	}
 
 	public String getName() {
-		return mText.getText().toString();
+		return mBinding.applicationName.getText().toString();
 	}
 
 	public boolean hasPackage() {
@@ -168,4 +169,11 @@ public class ApplicationView extends CardView {
 		return (getPreferenceKey(getPosition()));
 	}
 
+	public void setCustomBitmap(Bitmap bitmap) {
+		showName(false);
+		mCustomBitmap = new BitmapDrawable(getResources(), bitmap);
+		mCustomBitmap.setGravity(Gravity.CENTER);
+		setBackground(mCustomBitmap);
+		mBinding.applicationIcon.setImageDrawable(null);
+	}
 }

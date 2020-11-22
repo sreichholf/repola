@@ -23,10 +23,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Outline;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +48,9 @@ import net.reichholf.repola.activities.Preferences;
 import net.reichholf.repola.databinding.FragmentApplicationBinding;
 import net.reichholf.repola.views.ApplicationView;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -54,12 +61,14 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	private static final int REQUEST_CODE_WALLPAPER = 0x1F;
 	private static final int REQUEST_CODE_APPLICATION_START = 0x20;
 	private static final int REQUEST_CODE_PREFERENCES = 0x21;
+	private static final int REQUEST_CUSTOM_APP_ICON = 0x22;
 
 	private int mGridX = 3;
 	private int mGridY = 2;
 	private Setup mSetup;
 	private ApplicationView[][] mApplications = null;
 	private FragmentApplicationBinding mBinding;
+	private ApplicationView mTarget = null;
 
 	public ApplicationFragment() {
 		// Required empty public constructor
@@ -71,11 +80,9 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		mBinding = FragmentApplicationBinding.inflate(inflater);
 		mSetup = new Setup(getContext());
-		if (mSetup.keepScreenOn())
-			mBinding.container.setKeepScreenOn(true);
 
+		mBinding = FragmentApplicationBinding.inflate(inflater);
 		mBinding.applications.setOnClickListener(this);
 		mBinding.settings.setOnClickListener(this);
 		mBinding.wifi.setOnClickListener(this);
@@ -249,7 +256,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 					AppInfo appInfo = new AppInfo(pm, pi.applicationInfo);
 					app.setImageDrawable(appInfo.getIcon())
 							.setText(appInfo.getName())
-							.setPackageName(appInfo.getPackageName());
+							.setPackageName(appInfo.getPackageName())
+							.showName(mSetup.showNames());
 					if (mSetup.colorfulIcons()) {
 						int alpha = (int) (255 - (mSetup.getTransparency() * 255)) << 24;
 						Utils.tintAppIcon(app.getBackground(), appInfo.getPalette(), alpha);
@@ -276,10 +284,16 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 				Toast.makeText(getActivity(), R.string.home_locked, Toast.LENGTH_SHORT).show();
 			} else {
 				openApplicationList(ApplicationList.VIEW_LIST, appView.getPosition(), appView.hasPackage(), REQUEST_CODE_APPLICATION_LIST);
+				/*
+				mTarget = appView;
+				Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+				intent.setType("image/*");
+				startActivityForResult(intent, REQUEST_CUSTOM_APP_ICON);
+				 */
 			}
-			return (true);
+			return true;
 		}
-		return (false);
+		return false;
 	}
 
 	@Override
@@ -347,6 +361,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
 		super.onActivityResult(requestCode, resultCode, intent);
+		if (resultCode != Activity.RESULT_OK)
+			return;
 		switch (requestCode) {
 			case REQUEST_CODE_WALLPAPER:
 				break;
@@ -372,7 +388,23 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 					updateApplications();
 				}
 				break;
+			case REQUEST_CUSTOM_APP_ICON:
+				if (intent != null) {
+					Bitmap appIcon;
+					try {
+						Uri contentUri = intent.getData();
+						Log.i(ApplicationFragment.class.getCanonicalName(), contentUri.toString());
+						appIcon = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), contentUri);
+						mTarget.setCustomBitmap(appIcon);
+					} catch (FileNotFoundException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				break;
 		}
+		mTarget = null;
 	}
 
 

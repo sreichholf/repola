@@ -30,12 +30,8 @@
 	<string name="summary_background">Set background image</string>
 	<string name="title_system">System settings</string>
 	<string name="summary_system">Open system settings</string>
-	<string name="summary_show_name">Display applications names on main screen</string>
-	<string name="title_show_name">Display names</string>
-	<string name="title_margin_x">Horizontal margin</string>
-	<string name="title_margin_y">Vertical margin</string>
-	<string name="summary_margin_x">%s dp</string>
-	<string name="summary_margin_y">%s dp</string>
+	<string name="summary_show_name">Show applications names on main screen</string>
+	<string name="show_application_name">Show application names</string>
 	<string name="title_transparency">Background transparency</string>
 	<string name="about">About</string>
 	<string name="error_opening_link">Error (%1$s) : %2$s</string>
