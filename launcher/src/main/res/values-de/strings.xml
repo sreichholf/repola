@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">RePoLa</string>
+	<string name="title_github" translatable="false">Github</string>
+	<string name="title_screen_always_on">Immer an</string>
+	<string name="summary_screen_always_on">Der Bildschirm soll daueraft an sein</string>
+	<string name="app_grid">Raster Größe</string>
+	<string name="title_grid_x">Spalten</string>
+	<string name="summary_grid_x">%s Spalten</string>
+	<string name="title_grid_y">Zeilen</string>
+	<string name="summary_grid_y">%s Zeilen</string>
+	<string name="system">System</string>
+	<string name="title_background">Hintergrund</string>
+	<string name="summary_background">Ein Hintergrundbild wählen</string>
+	<string name="title_system">Systemeinstellungen</string>
+	<string name="summary_system">Systemeinstellungen öffnen</string>
+	<string name="summary_show_name">App Namen im Hauptbildschirm anzeigen</string>
+	<string name="show_application_name">App Namen anzeigen</string>
+	<string name="title_transparency">Hintergrundtransparenz</string>
+	<string name="about">Über</string>
+	<string name="error_opening_link">Fehler:  (%1$s) : %2$s</string>
+	<string name="home_locked">Icons sind gesperrt (in den Einstellungen entsperren)</string>
+	<string name="summary_locked">Icons sperren. Deaktiviert die Möglichkeit diese zu ändern/ zu entfernen</string>
+	<string name="title_locked">Icons sperren</string>
+	<string name="summary_colorful_icons">Individuell eingefärbte Hintergründe für Apps nutzen</string>
+	<string name="colorful_icons">Farbenfrohe Icons</string>
+	<string name="title_general">Allgemeine Einstellungen</string>
+	<string name="summary_apps_cols">Spalten in der App-Übersicht</string>
+	<string name="title_apps_cols">App-Übersicht - Spalten</string>
+	<string name="corner_radius">Eckradius</string>
+	<string name="corner_radius_summary">%s</string>
+	<string name="action_wallpaper">Hintergrund wählen</string>
+</resources>
