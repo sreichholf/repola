@@ -84,7 +84,6 @@
 			app:key="preference_background"
 			app:summary="@string/summary_background"
 			app:title="@string/title_background">
-			<intent android:action="android.intent.action.SET_WALLPAPER" />
 		</Preference>
 		<Preference
 			app:key="preference_system"

@@ -28,6 +28,7 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 	public static final String PREFERENCE_COLORFUL_ICONS = "preference_colorful_icons";
 	public static final String PREFERENCE_ALL_APPS_COLS = "preference_apps_cols";
 	public static final String PREFERENCE_CORNER_RADIUS = "preference_corner_radius";
+	public static final String PREFERENCE_BACKGROUND = "preference_background";
 
 	@Override
 	public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -47,6 +48,12 @@ public class PreferenceFragment extends PreferenceFragmentCompat {
 						Toast.LENGTH_LONG).show();
 			}
 			return (true);
+		});
+
+		findPreference(PREFERENCE_BACKGROUND).setOnPreferenceClickListener(preference -> {
+			Intent intent = new Intent(Intent.ACTION_SET_WALLPAPER);
+			startActivity(Intent.createChooser(intent, getString(R.string.action_wallpaper)));
+			return (false);
 		});
 
 		PackageInfo pInfo;
