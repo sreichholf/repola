@@ -20,12 +20,7 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 30
-    buildToolsVersion '30.0.2'
 
-    lintOptions {
-        abortOnError true
-        lintConfig file('lint.xml')
-    }
 
     buildFeatures {
         viewBinding true
@@ -70,8 +65,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    lint {
+        abortOnError true
+        lintConfig file('lint.xml')
     }
 }
 
