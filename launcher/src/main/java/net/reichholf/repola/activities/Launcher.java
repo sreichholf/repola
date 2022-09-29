@@ -17,17 +17,15 @@
 
 package net.reichholf.repola.activities;
 
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.FragmentActivity;
-
 import android.view.View;
 import android.view.WindowManager;
 
 import net.reichholf.repola.R;
 import net.reichholf.repola.fragments.ApplicationFragment;
+
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentActivity;
 
 public class Launcher extends FragmentActivity {
 
