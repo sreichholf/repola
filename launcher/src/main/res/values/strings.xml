@@ -45,4 +45,5 @@
 	<string name="title_apps_cols">All Apps - Columns</string>
 	<string name="corner_radius">Corner Radius</string>
 	<string name="corner_radius_summary">%s</string>
+	<string name="action_wallpaper">Choose a Wallpaper</string>
 </resources>
