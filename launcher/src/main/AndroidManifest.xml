@@ -27,6 +27,8 @@
 		android:required="false" />
 
 	<uses-permission android:name="android.permission.SET_WALLPAPER" />
+	<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+		tools:ignore="QueryAllPackagesPermission" />
 
 	<application
 		android:name="net.reichholf.repola.App"
