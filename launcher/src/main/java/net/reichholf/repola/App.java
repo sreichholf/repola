@@ -25,6 +25,8 @@ import android.content.IntentFilter;
 import android.util.Log;
 
 public class App extends Application {
+	public static final String KEY_REQUEST_CODE = "RequestCode";
+
 	private static String LOG_TAG = App.class.getCanonicalName();
 	private BroadcastReceiver mReceiver = new BroadcastReceiver() {
 		@Override

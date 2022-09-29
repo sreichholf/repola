@@ -24,12 +24,14 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.view.View;
 
+import net.reichholf.repola.App;
 import net.reichholf.repola.AppInfo;
 import net.reichholf.repola.R;
 import net.reichholf.repola.Setup;
 import net.reichholf.repola.adapter.AppInfoAdapter;
 import net.reichholf.repola.adapter.ItemClickSupport;
 import net.reichholf.repola.databinding.ApplicationsBinding;
+import net.reichholf.repola.fragments.ApplicationFragment;
 import net.reichholf.repola.views.models.ApplicationViewModel;
 
 import java.util.ArrayList;
@@ -93,6 +95,7 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 		model.getApplications().observe(this, applications -> {
 			onApplicationListReady(applications);
 		});
+		setResult(RESULT_OK, getIntent());
 	}
 
 	@Override
@@ -100,7 +103,7 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 		int id = v.getId();
 		if (id == R.id.delete) {
 			Intent data = new Intent();
-
+			data.putExtra(App.KEY_REQUEST_CODE, getIntent().getIntExtra(App.KEY_REQUEST_CODE, -1));
 			data.putExtra(DELETE, true);
 			data.putExtra(APPLICATION_NUMBER, mApplication);
 
@@ -127,6 +130,7 @@ public class ApplicationList extends AppCompatActivity implements View.OnClickLi
 		AppInfo appInfo = (AppInfo) v.getTag();
 		Intent data = new Intent();
 
+		data.putExtra(App.KEY_REQUEST_CODE, getIntent().getIntExtra(App.KEY_REQUEST_CODE, -1));
 		data.putExtra(PACKAGE_NAME, appInfo.getPackageName());
 		data.putExtra(APPLICATION_NUMBER, mApplication);
 

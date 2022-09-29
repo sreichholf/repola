@@ -51,12 +51,17 @@ import net.reichholf.repola.views.ApplicationView;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import static net.reichholf.repola.App.KEY_REQUEST_CODE;
 
 public class ApplicationFragment extends Fragment implements View.OnClickListener, View.OnLongClickListener {
 	public static final String TAG = "ApplicationFragment";
 	private static final String PREFERENCES_NAME = "applications";
+
 	private static final int REQUEST_CODE_APPLICATION_LIST = 0x1E;
 	private static final int REQUEST_CODE_WALLPAPER = 0x1F;
 	private static final int REQUEST_CODE_APPLICATION_START = 0x20;
@@ -69,6 +74,17 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 	private ApplicationView[][] mApplications = null;
 	private FragmentApplicationBinding mBinding;
 	private ApplicationView mTarget = null;
+
+	// You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+	ActivityResultLauncher<Intent> mActivityResultLauncher = registerForActivityResult(
+			new ActivityResultContracts.StartActivityForResult(),
+			result -> {
+				if (result.getResultCode() == Activity.RESULT_OK) {
+					// There are no request codes
+					Intent data = result.getData();
+					onActivityResult(data.getExtras().getInt(KEY_REQUEST_CODE, 0), data);
+				}
+			});
 
 	public ApplicationFragment() {
 		// Required empty public constructor
@@ -107,6 +123,11 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		updateApplications();
 		setApplicationOrder();
 		mBinding.container.setVisibility(View.VISIBLE);
+	}
+
+	public void openActivityForResult(Intent intent, int requestCode) {
+		intent.putExtra(KEY_REQUEST_CODE, requestCode);
+		mActivityResultLauncher.launch(intent);
 	}
 
 	private void setButtonCorners(View view) {
@@ -307,7 +328,8 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		if (id == R.id.applications) {
 			openApplicationList(ApplicationList.VIEW_GRID, 0, false, REQUEST_CODE_APPLICATION_START);
 		} else if (id == R.id.settings) {
-			startActivityForResult(new Intent(getContext(), Preferences.class), REQUEST_CODE_PREFERENCES);
+			Intent intent = new Intent(getContext(), Preferences.class);
+			openActivityForResult(intent, REQUEST_CODE_PREFERENCES);
 		} else if (id == R.id.wifi) {
 			startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
 		} else if (id == R.id.bluetooth) {
@@ -344,7 +366,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		intent.putExtra(ApplicationList.APPLICATION_NUMBER, appNum);
 		intent.putExtra(ApplicationList.VIEW_TYPE, viewType);
 		intent.putExtra(ApplicationList.SHOW_DELETE, showDelete);
-		startActivityForResult(intent, requestCode);
+		openActivityForResult(intent, requestCode);
 	}
 
 	private Intent getLaunchIntentForPackage(String packageName) {
@@ -358,11 +380,7 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 		return launchIntent;
 	}
 
-	@Override
-	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		super.onActivityResult(requestCode, resultCode, intent);
-		if (resultCode != Activity.RESULT_OK)
-			return;
+	public void onActivityResult(int requestCode, Intent intent) {
 		switch (requestCode) {
 			case REQUEST_CODE_WALLPAPER:
 				break;
@@ -374,19 +392,17 @@ public class ApplicationFragment extends Fragment implements View.OnClickListene
 					openApplication(intent.getExtras().getString(ApplicationList.PACKAGE_NAME));
 				break;
 			case REQUEST_CODE_APPLICATION_LIST:
-				if (resultCode == Activity.RESULT_OK) {
-					Bundle extra = intent.getExtras();
-					int appNum = intent.getExtras().getInt(ApplicationList.APPLICATION_NUMBER);
+				Bundle extra = intent.getExtras();
+				int appNum = intent.getExtras().getInt(ApplicationList.APPLICATION_NUMBER);
 
-					if (extra.containsKey(ApplicationList.DELETE) && extra.getBoolean(ApplicationList.DELETE)) {
-						writePreferences(appNum, null);
-					} else {
-						writePreferences(appNum,
-								intent.getExtras().getString(ApplicationList.PACKAGE_NAME)
-						);
-					}
-					updateApplications();
+				if (extra.containsKey(ApplicationList.DELETE) && extra.getBoolean(ApplicationList.DELETE)) {
+					writePreferences(appNum, null);
+				} else {
+					writePreferences(appNum,
+							intent.getExtras().getString(ApplicationList.PACKAGE_NAME)
+					);
 				}
+				updateApplications();
 				break;
 			case REQUEST_CUSTOM_APP_ICON:
 				if (intent != null) {
